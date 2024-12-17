@@ -11,6 +11,9 @@ public class UserDBHelper extends MyDBHelper {
 
     public UserDBHelper(Context context) {
         super(context);
+        if (context == null) {
+            throw new IllegalArgumentException("Context cannot be null");
+        }
     }
 
     public long addUser(User user) {
@@ -20,7 +23,6 @@ public class UserDBHelper extends MyDBHelper {
         values.put(KEY_USERNAME, user.getUsername());
         values.put(KEY_PASSWORD, user.getPassword());
         values.put(KEY_PHONE, user.getPhone());
-        values.put(KEY_NAME, user.getName());
         // ... 添加其他个人信息
 
         long id = db.insert(TABLE_USERS, null, values);
@@ -31,7 +33,7 @@ public class UserDBHelper extends MyDBHelper {
     // 根据用户ID获取用户
     public User getUserById(int userId) {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.query(TABLE_USERS, new String[]{KEY_USER_ID, KEY_USERNAME, KEY_PHONE, KEY_NAME},
+        Cursor cursor = db.query(TABLE_USERS, new String[]{KEY_USER_ID, KEY_USERNAME, KEY_PHONE, KEY_REGISTER_DATE},
                 KEY_USER_ID + "=?", new String[]{String.valueOf(userId)}, null, null, null, null);
 
         User user = null;
@@ -40,7 +42,7 @@ public class UserDBHelper extends MyDBHelper {
             user.setId(cursor.getInt(cursor.getColumnIndex(KEY_USER_ID)));
             user.setUsername(cursor.getString(cursor.getColumnIndex(KEY_USERNAME)));
             user.setPhone(cursor.getString(cursor.getColumnIndex(KEY_PHONE)));
-            user.setName(cursor.getString(cursor.getColumnIndex(KEY_NAME)));
+            user.setRegisterDate(cursor.getString(cursor.getColumnIndex(KEY_REGISTER_DATE)));
             // ... 设置其他字段
         }
 
@@ -53,7 +55,7 @@ public class UserDBHelper extends MyDBHelper {
     public User getUserByPhone(String phone) {
         SQLiteDatabase db = this.getReadableDatabase();
 
-        Cursor cursor = db.query(TABLE_USERS, new String[]{KEY_USER_ID, KEY_USERNAME, KEY_PASSWORD, KEY_PHONE, KEY_NAME},
+        Cursor cursor = db.query(TABLE_USERS, new String[]{KEY_USER_ID, KEY_USERNAME, KEY_PASSWORD, KEY_PHONE, KEY_REGISTER_DATE},
                 KEY_PHONE + "=?", new String[]{phone}, null, null, null, null);
         User user = null;
         if (cursor != null && cursor.moveToFirst()) {
@@ -61,9 +63,8 @@ public class UserDBHelper extends MyDBHelper {
             user.setId(cursor.getInt(0));
             user.setUsername(cursor.getString(1));
             user.setPassword(cursor.getString(2));
-            user.setPhone(cursor.getString(3));
-            user.setName(cursor.getString(4));
-            // ... 设置其他字段
+            user.setRegisterDate(cursor.getString(3));
+            user.setPhone(cursor.getString(4));
             cursor.close();
         }
         db.close();
@@ -72,10 +73,10 @@ public class UserDBHelper extends MyDBHelper {
 
 
     //检查电话是否存在
-    public boolean isPhoneExists(String email) {
+    public boolean isPhoneExists(String phone) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query(TABLE_USERS, new String[]{KEY_USER_ID},
-                KEY_PHONE + "=?", new String[]{email}, null, null, null, null);
+                KEY_PHONE + "=?", new String[]{phone}, null, null, null, null);
         boolean exists = (cursor.getCount() > 0);
         cursor.close();
         return exists;
@@ -89,16 +90,15 @@ public class UserDBHelper extends MyDBHelper {
         values.put(KEY_USERNAME, user.getUsername());
         values.put(KEY_PASSWORD, user.getPassword());
         values.put(KEY_PHONE, user.getPhone());
-        values.put(KEY_NAME, user.getName());
         // ... 更新其他个人信息
 
         return db.update(TABLE_USERS, values, KEY_USER_ID + " = ?", new String[]{String.valueOf(user.getId())});
     }
 
     // 删除用户
-    public void deleteUser(User user) {
+    public void deleteUser(int userId) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_USERS, KEY_USER_ID + " = ?", new String[]{String.valueOf(user.getId())});
+        db.delete(TABLE_USERS, KEY_USER_ID + " = ?", new String[]{String.valueOf(userId)});
         db.close();
     }
 }

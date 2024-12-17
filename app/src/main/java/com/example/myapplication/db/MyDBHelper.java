@@ -1,8 +1,6 @@
 package com.example.myapplication.db;
 
-import android.content.ContentValues;
 import android.content.Context;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -21,7 +19,8 @@ public class MyDBHelper extends SQLiteOpenHelper {
     public static final String KEY_USERNAME = "username";
     public static final String KEY_PASSWORD = "password";
     public static final String KEY_PHONE = "phone";
-    public static final String KEY_NAME = "name"; // 添加其他个人信息字段
+    public static final String KEY_REGISTER_DATE = "register_date"; // 添加注册时间字段
+
     // ... 其他个人信息字段
 
     // 观看历史表名
@@ -44,6 +43,7 @@ public class MyDBHelper extends SQLiteOpenHelper {
             + KEY_USER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
             + KEY_USERNAME + " TEXT NOT NULL,"
             + KEY_PASSWORD + " TEXT NOT NULL,"
+            + KEY_REGISTER_DATE + " DATETIME DEFAULT CURRENT_TIMESTAMP,"
             + KEY_PHONE + " TEXT UNIQUE)";
 
     // 创建观看历史表的 SQL 语句
