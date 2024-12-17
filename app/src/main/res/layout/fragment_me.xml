@@ -94,6 +94,14 @@
                             android:textStyle="bold" />
 
                         <TextView
+                            android:id="@+id/tv_user_id"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="UID: 123456"
+                            android:textColor="@color/white"
+                            android:textSize="14sp" />
+
+                        <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="段位: 积分不足, 暂无段位"

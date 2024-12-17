@@ -1,5 +1,6 @@
 package com.example.myapplication.ui.me;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -15,6 +16,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.myapplication.R;
+import com.example.myapplication.ui.me.Settings.ChangeUserInfoActivity;
 
 public class SettingActivity extends AppCompatActivity {
 
@@ -45,6 +47,7 @@ public class SettingActivity extends AppCompatActivity {
         RelativeLayout changeSecurity = findViewById(R.id.rl_change_security);
         RelativeLayout privacy = findViewById(R.id.rl_privacy);
         RelativeLayout about = findViewById(R.id.rl_about);
+        RelativeLayout countDelete = findViewById(R.id.rl_account_delete);
 
         Button logoutButton = findViewById(R.id.bt_logout);
 
@@ -52,7 +55,8 @@ public class SettingActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // 处理账号与安全点击事件
-                Toast.makeText(SettingActivity.this, "账号与安全", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(SettingActivity.this, ChangeUserInfoActivity.class);
+                startActivity(intent);
             }
         });
         changePsw.setOnClickListener(new View.OnClickListener() {
@@ -92,6 +96,13 @@ public class SettingActivity extends AppCompatActivity {
             }
         });
         logoutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 处理账号与安全点击事件
+                Toast.makeText(SettingActivity.this, "账号与安全", Toast.LENGTH_SHORT).show();
+            }
+        });
+        countDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // 处理账号与安全点击事件
