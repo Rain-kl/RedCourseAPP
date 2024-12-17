@@ -21,6 +21,7 @@ public class ExerciseFragment extends Fragment {
         ExerciseViewModel exerciseViewModel =
                 new ViewModelProvider(this).get(ExerciseViewModel.class);
 
+
         binding = FragmentExerciseBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
