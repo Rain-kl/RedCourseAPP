@@ -1,9 +1,11 @@
 package com.example.myapplication.ui.me;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -23,9 +25,15 @@ public class MeFragment extends Fragment {
 
         binding = FragmentMeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+        ImageView imageView=binding.ivSetting;
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(getActivity(), SettingActivity.class);
+                startActivity(intent);
+            }
+        });
 
-        final TextView textView = binding.textNotifications;
-        meViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return root;
     }
 
