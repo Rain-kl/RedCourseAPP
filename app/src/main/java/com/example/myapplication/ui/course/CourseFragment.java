@@ -1,46 +1,63 @@
 package com.example.myapplication.ui.course;
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-import android.widget.Toast;
-import android.widget.Button;
+import android.widget.ListView;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 
 import com.example.myapplication.databinding.FragmentCourseBinding;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class CourseFragment extends Fragment {
+    ListView1Adapter listAdapter;
+    private final List<CourseBean> listData = new ArrayList<>();
 
     private FragmentCourseBinding binding;
 
+    @SuppressLint("ShowToast")
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        CourseViewModel courseViewModel =
-                new ViewModelProvider(this).get(CourseViewModel.class);
 
         binding = FragmentCourseBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+        ListView listView = binding.lvCourse;
+         listAdapter = new ListView1Adapter(getContext(), listData);
+        listView.setAdapter(listAdapter);
 
-        final TextView textView = binding.textHome;
-        courseViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        // 填充 listData 数据
+        fillListData();
 
-        // 获取按钮的引用
-        Button clickButton = binding.btClick;
-
-        // 设置按钮的点击事件监听器
-        clickButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // 创建并显示 Toast
-                Toast.makeText(getContext(), "Button Clicked!", Toast.LENGTH_SHORT).show();
-            }
+        listView.setOnItemClickListener((parent, view, position, id) -> {
+            Intent intent = new Intent(getContext(), VideoPlaybackActivity.class);
+            intent.putExtra("position", position); // 将点击的位置传递给 VideoPlaybackActivity
+            startActivity(intent);
         });
-
         return root;
+    }
+    private void fillListData() {
+        String[] imageUrls = {
+                "http://159.75.231.207:9000/red/image/carousel/carousel_1.jpg",
+                "http://159.75.231.207:9000/red/image/carousel/carousel_2.jpg", // 修正了文件名错误
+                "http://159.75.231.207:9000/red/image/carousel/carousel_3.jpg"
+        };
+
+
+        for (int i = 0; i < imageUrls.length; i++) {
+            // 假设CourseBean有一个接受String类型的构造函数，用于存储图片URL
+            listData.add(new CourseBean(imageUrls[i], "课程" + (i + 1)));
+        }
+
+
+
+        listAdapter.notifyDataSetChanged();
     }
 
     @Override
