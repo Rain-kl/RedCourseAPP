@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -52,7 +53,7 @@ public class MeFragment extends Fragment {
 
         binding = FragmentMeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-        ImageView imageView = binding.ivSetting;
+
 
         // 检查用户是否已登录
         if (userId != -1) {
@@ -72,12 +73,30 @@ public class MeFragment extends Fragment {
                 //可以根据自己实际情况处理
             }
         }
-
-        imageView.setOnClickListener(new View.OnClickListener() {
+        ImageView ivSetting = binding.ivSetting;
+        ivSetting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), SettingActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        LinearLayout llHistory = binding.llHistory;
+        llHistory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), HistoryActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        LinearLayout llFavorite = binding.llFavorite;
+        llFavorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                Intent intent = new Intent(getActivity(), FavoriteActivity.class);
+//                startActivity(intent);
             }
         });
 
