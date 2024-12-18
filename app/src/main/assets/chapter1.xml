@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<infos>
+    <exercises id="1">
+        <subject>1. 马克思主义的创始人是（）。</subject>
+        <a>列宁</a>
+        <b>恩格斯</b>
+        <c>马克思</c>
+        <d>斯大林</d>
+        <answer>3</answer>
+    </exercises>
+
+    <exercises id="2">
+        <subject>2. 列宁是哪个国家的革命领袖？（）</subject>
+        <a>德国</a>
+        <b>俄罗斯</b>
+        <c>中国</c>
+        <d>法国</d>
+        <answer>2</answer>
+    </exercises>
+
+    <exercises id="3">
+        <subject>3. 《共产党宣言》是哪一年发表的？（）</subject>
+        <a>1848年</a>
+        <b>1917年</b>
+        <c>1871年</c>
+        <d>1921年</d>
+        <answer>1</answer>
+    </exercises>
+
+    <exercises id="4">
+        <subject>4. 列宁的《国家与革命》主要论述了什么？（）</subject>
+        <a>国家理论和无产阶级革命</a>
+        <b>资本主义经济</b>
+        <c>社会主义文化</c>
+        <d>教育改革</d>
+        <answer>1</answer>
+    </exercises>
+
+    <exercises id="5">
+        <subject>5. 马克思主义的基本组成部分不包括以下哪一个？（）</subject>
+        <a>哲学</a>
+        <b>经济学</b>
+        <c>政治学</c>
+        <d>艺术学</d>
+        <answer>4</answer>
+    </exercises>
+</infos>
