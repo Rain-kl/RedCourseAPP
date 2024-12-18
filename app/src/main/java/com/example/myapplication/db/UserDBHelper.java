@@ -33,16 +33,17 @@ public class UserDBHelper extends MyDBHelper {
     // 根据用户ID获取用户
     public User getUserById(int userId) {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.query(TABLE_USERS, new String[]{KEY_USER_ID, KEY_USERNAME, KEY_PHONE, KEY_REGISTER_DATE},
+        Cursor cursor = db.query(TABLE_USERS, new String[]{KEY_USER_ID, KEY_USERNAME, KEY_PASSWORD, KEY_PHONE, KEY_REGISTER_DATE},
                 KEY_USER_ID + "=?", new String[]{String.valueOf(userId)}, null, null, null, null);
 
         User user = null;
         if (cursor != null && cursor.moveToFirst()) {
             user = new User();
-            user.setId(cursor.getInt(cursor.getColumnIndex(KEY_USER_ID)));
-            user.setUsername(cursor.getString(cursor.getColumnIndex(KEY_USERNAME)));
-            user.setPhone(cursor.getString(cursor.getColumnIndex(KEY_PHONE)));
-            user.setRegisterDate(cursor.getString(cursor.getColumnIndex(KEY_REGISTER_DATE)));
+            user.setId(cursor.getInt(0));
+            user.setUsername(cursor.getString(1));
+            user.setPassword(cursor.getString(2));
+            user.setPhone(cursor.getString(3));
+            user.setRegisterDate(cursor.getString(4));
             // ... 设置其他字段
         }
 
@@ -63,8 +64,8 @@ public class UserDBHelper extends MyDBHelper {
             user.setId(cursor.getInt(0));
             user.setUsername(cursor.getString(1));
             user.setPassword(cursor.getString(2));
-            user.setRegisterDate(cursor.getString(3));
-            user.setPhone(cursor.getString(4));
+            user.setPhone(cursor.getString(3));
+            user.setRegisterDate(cursor.getString(4));
             cursor.close();
         }
         db.close();
@@ -83,7 +84,7 @@ public class UserDBHelper extends MyDBHelper {
     }
 
     // 更新用户信息
-    public int updateUser(User user) {
+    public void updateUser(User user) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -92,7 +93,7 @@ public class UserDBHelper extends MyDBHelper {
         values.put(KEY_PHONE, user.getPhone());
         // ... 更新其他个人信息
 
-        return db.update(TABLE_USERS, values, KEY_USER_ID + " = ?", new String[]{String.valueOf(user.getId())});
+        db.update(TABLE_USERS, values, KEY_USER_ID + " = ?", new String[]{String.valueOf(user.getId())});
     }
 
     // 删除用户
