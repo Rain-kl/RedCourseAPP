@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<infos>
+    <exercises id="1">
+        <subject>1. 第一次鸦片战争发生在？（）</subject>
+        <a>1839-1842年</a>
+        <b>1856-1860年</b>
+        <c>1894-1895年</c>
+        <d>1900-1901年</d>
+        <answer>1</answer>
+    </exercises>
+
+    <exercises id="2">
+        <subject>2. 中国近代史上哪一事件标志着中国进入半殖民地半封建社会？（）</subject>
+        <a>甲午战争</a>
+        <b>鸦片战争</b>
+        <c>辛亥革命</c>
+        <d>五四运动</d>
+        <answer>2</answer>
+    </exercises>
+
+    <exercises id="3">
+        <subject>3. 辛亥革命推翻了哪个朝代？（）</subject>
+        <a>明朝</a>
+        <b>清朝</b>
+        <c>元朝</c>
+        <d>唐朝</d>
+        <answer>2</answer>
+    </exercises>
+
+    <exercises id="4">
+        <subject>4. 五四运动的直接导火索是什么？（）</subject>
+        <a>巴黎和会</a>
+        <b>庚子赔款</b>
+        <c>马关条约</c>
+        <d>天津条约</d>
+        <answer>1</answer>
+    </exercises>
+
+    <exercises id="5">
+        <subject>5. 南京国民政府成立于哪一年？（）</subject>
+        <a>1911年</a>
+        <b>1927年</b>
+        <c>1931年</c>
+        <d>1949年</d>
+        <answer>2</answer>
+    </exercises>
+</infos>

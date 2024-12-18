@@ -53,54 +53,54 @@ public class ExercisesView {
             bean.id=i+1;
             switch (i){
                 case 0:
-                    bean.title="第1章 什么是马克思主义";
+                    bean.title="第1章 马克思列宁主义";
                     bean.content="共计5道题";
                     bean.background=(R.drawable.exercises_bg_1);
                     break;
                 case 1:
-                    bean.title="第2章 什么是马克思主义";
+                    bean.title="第2章 毛泽东思想";
                     bean.content="共计5道题";
-                    bean.background=(R.drawable.exercises_bg_1);
+                    bean.background=(R.drawable.exercises_bg_2);
                     break;
                 case 2:
-                    bean.title="第3章 马克思主义基本原理";
+                    bean.title="第3章 邓小平理论";
                     bean.content="共计5道题";
-                    bean.background=(R.drawable.exercises_bg_1);
+                    bean.background=(R.drawable.exercises_bg_3);
                     break;
                 case 3:
-                    bean.title="第4章 马克思主义的发展";
+                    bean.title="第4章 三个代表重要思想";
                     bean.content="共计5道题";
-                    bean.background=(R.drawable.exercises_bg_1);
+                    bean.background=(R.drawable.exercises_bg_4);
                     break;
                 case 4:
-                    bean.title="第5章 马克思主义在中国的运用";
+                    bean.title="第5章 科学发展观";
                     bean.content="共计5道题";
                     bean.background=(R.drawable.exercises_bg_1);
                     break;
                 case 5:
-                    bean.title="第6章 马克思主义的再大展";
+                    bean.title="第6章 习近平新时代中国特色社会主义思想";
                     bean.content="共计5道题";
-                    bean.background=(R.drawable.exercises_bg_1);
+                    bean.background=(R.drawable.exercises_bg_2);
                     break;
                 case 6:
-                    bean.title="第7章 马克思主义的意义";
+                    bean.title="第7章 中国近代史";
                     bean.content="共计5道题";
-                    bean.background=(R.drawable.exercises_bg_1);
+                    bean.background=(R.drawable.exercises_bg_3);
                     break;
                 case 7:
-                    bean.title="第8章 马克思主义的历史地位";
+                    bean.title="第8章 时事政治";
                     bean.content="共计5道题";
-                    bean.background=(R.drawable.exercises_bg_1);
+                    bean.background=(R.drawable.exercises_bg_4);
                     break;
                 case 8:
-                    bean.title="第9章 马克思主义的再发展";
+                    bean.title="第9章 中华民族伟大复兴";
                     bean.content="共计5道题";
                     bean.background=(R.drawable.exercises_bg_1);
                     break;
                 case 9:
-                    bean.title="第10章 坚持学习马克思主义";
+                    bean.title="第10章 人类命运共同体";
                     bean.content="共计5道题";
-                    bean.background=(R.drawable.exercises_bg_1);
+                    bean.background=(R.drawable.exercises_bg_2);
                     break;
             }
             eb1.add(bean);

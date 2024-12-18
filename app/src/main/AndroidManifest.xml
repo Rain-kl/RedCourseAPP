@@ -24,6 +24,9 @@
             android:name=".ui.me.Settings.ChangeUserInfoActivity"
             android:exported="false" />
         <activity
+            android:name=".ui.exercise.ExercisesDetailActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.me.SettingActivity"
             android:exported="false" />
         <activity android:name=".ui.course.VideoPlaybackActivity" />

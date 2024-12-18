@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<infos>
+    <exercises id="1">
+        <subject>1. “三个代表”重要思想的提出者是（）。</subject>
+        <a>毛泽东</a>
+        <b>邓小平</b>
+        <c>江泽民</c>
+        <d>胡锦涛</d>
+        <answer>3</answer>
+    </exercises>
+
+    <exercises id="2">
+        <subject>2. “三个代表”重要思想不包括以下哪一项？（）</subject>
+        <a>代表先进生产力的发展要求</a>
+        <b>代表先进文化的前进方向</b>
+        <c>代表最广大人民的根本利益</c>
+        <d>代表生态文明的建设</d>
+        <answer>4</answer>
+    </exercises>
+
+    <exercises id="3">
+        <subject>3. “三个代表”重要思想首次提出是在何时？（）</subject>
+        <a>1997年</a>
+        <b>2000年</b>
+        <c>2002年</c>
+        <d>1992年</d>
+        <answer>2</answer>
+    </exercises>
+
+    <exercises id="4">
+        <subject>4. “三个代表”重要思想是在党的哪次大会上被写入党章的？（）</subject>
+        <a>十五大</a>
+        <b>十六大</b>
+        <c>十七大</c>
+        <d>十八大</d>
+        <answer>2</answer>
+    </exercises>
+
+    <exercises id="5">
+        <subject>5. “三个代表”重要思想的提出背景是？（）</subject>
+        <a>冷战结束</a>
+        <b>经济全球化</b>
+        <c>科技革命</c>
+        <d>文化大革命</d>
+        <answer>2</answer>
+    </exercises>
+</infos>
