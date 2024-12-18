@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<infos>
+    <exercises id="1">
+        <subject>1. 邓小平理论的核心是（）。</subject>
+        <a>经济建设为中心</a>
+        <b>文化大革命</b>
+        <c>农村包围城市</c>
+        <d>三个代表</d>
+        <answer>1</answer>
+    </exercises>
+
+    <exercises id="2">
+        <subject>2. 邓小平在哪次会议上提出改革开放？（）</subject>
+        <a>十一届三中全会</a>
+        <b>十二大</b>
+        <c>十三大</c>
+        <d>十四大</d>
+        <answer>1</answer>
+    </exercises>
+
+    <exercises id="3">
+        <subject>3. 邓小平提出的“三步走”战略中，第二步目标是（）。</subject>
+        <a>解决温饱问题</a>
+        <b>达到小康水平</b>
+        <c>实现现代化</c>
+        <d>建成社会主义社会</d>
+        <answer>2</answer>
+    </exercises>
+
+    <exercises id="4">
+        <subject>4. 邓小平在哪个领域首先推行改革？（）</subject>
+        <a>农业</a>
+        <b>工业</b>
+        <c>教育</c>
+        <d>金融</d>
+        <answer>1</answer>
+    </exercises>
+
+    <exercises id="5">
+        <subject>5. 邓小平提出的“一国两制”构想是为了解决哪两个地区的问题？（）</subject>
+        <a>香港和澳门</a>
+        <b>台湾和澳门</b>
+        <c>香港和台湾</c>
+        <d>西藏和新疆</d>
+        <answer>1</answer>
+    </exercises>
+</infos>

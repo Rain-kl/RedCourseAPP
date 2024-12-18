@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<infos>
+    <exercises id="1">
+        <subject>1. 毛泽东思想的核心内容是（）。</subject>
+        <a>实事求是</a>
+        <b>社会主义现代化</b>
+        <c>文化大革命</c>
+        <d>三个代表</d>
+        <answer>1</answer>
+    </exercises>
+
+    <exercises id="2">
+        <subject>2. 毛泽东在哪次会议上确立了对全党的领导地位？（）</subject>
+        <a>遵义会议</a>
+        <b>八七会议</b>
+        <c>古田会议</c>
+        <d>洛川会议</d>
+        <answer>1</answer>
+    </exercises>
+
+    <exercises id="3">
+        <subject>3. “枪杆子里面出政权”是毛泽东在哪篇文章中提出的？（）</subject>
+        <a>《中国的红色政权为什么能够存在？》</a>
+        <b>《星星之火，可以燎原》</b>
+        <c>《反对本本主义》</c>
+        <d>《湖南农民运动考察报告》</d>
+        <answer>1</answer>
+    </exercises>
+
+    <exercises id="4">
+        <subject>4. 毛泽东思想正式写入党章是哪一年？（）</subject>
+        <a>1945年</a>
+        <b>1956年</b>
+        <c>1969年</c>
+        <d>1978年</d>
+        <answer>1</answer>
+    </exercises>
+
+    <exercises id="5">
+        <subject>5. 毛泽东在哪篇文章中首次系统阐述了人民战争的理论？（）</subject>
+        <a>《论持久战》</a>
+        <b>《论人民民主专政》</b>
+        <c>《新民主主义论》</c>
+        <d>《矛盾论》</d>
+        <answer>1</answer>
+    </exercises>
+</infos>

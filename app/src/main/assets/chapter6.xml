@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<infos>
+    <exercises id="1">
+        <subject>1. 习近平新时代中国特色社会主义思想是在党的哪次大会上提出的？（）</subject>
+        <a>十七大</a>
+        <b>十八大</b>
+        <c>十九大</c>
+        <d>二十大</d>
+        <answer>3</answer>
+    </exercises>
+
+    <exercises id="2">
+        <subject>2. 习近平新时代中国特色社会主义思想的核心内容包括？（）</subject>
+        <a>全面小康</a>
+        <b>四个全面战略布局</b>
+        <c>三个代表</c>
+        <d>和平共处五项原则</d>
+        <answer>2</answer>
+    </exercises>
+
+    <exercises id="3">
+        <subject>3. 习近平新时代中国特色社会主义思想强调要实现什么样的现代化？（）</subject>
+        <a>西方式现代化</a>
+        <b>全面现代化</b>
+        <c>中国式现代化</c>
+        <d>工业现代化</d>
+        <answer>3</answer>
+    </exercises>
+
+    <exercises id="4">
+        <subject>4. 习近平新时代中国特色社会主义思想强调的“两个一百年”奋斗目标中，第一个一百年是指？（）</subject>
+        <a>新中国成立一百年</a>
+        <b>中共成立一百年</b>
+        <c>改革开放一百年</c>
+        <d>抗日战争胜利一百年</d>
+        <answer>2</answer>
+    </exercises>
+
+    <exercises id="5">
+        <subject>5. 习近平新时代中国特色社会主义思想指出要坚持和完善什么制度？（）</subject>
+        <a>资本主义制度</a>
+        <b>社会主义制度</b>
+        <c>君主立宪制</c>
+        <d>联邦制度</d>
+        <answer>2</answer>
+    </exercises>
+</infos>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<infos>
+    <exercises id="1">
+        <subject>1. 中华民族伟大复兴的中国梦首次提出是在？（）</subject>
+        <a>十七大</a>
+        <b>十八大</b>
+        <c>十九大</c>
+        <d>二十大</d>
+        <answer>2</answer>
+    </exercises>
+
+    <exercises id="2">
+        <subject>2. 中华民族伟大复兴主要依靠什么样的发展？（）</subject>
+        <a>军事发展</a>
+        <b>科技发展</b>
+        <c>经济发展</c>
+        <d>全面发展</d>
+        <answer>4</answer>
+    </exercises>
+
+    <exercises id="3">
+        <subject>3. 中华民族伟大复兴的目标之一是建设什么样的国家？（）</subject>
+        <a>富强、民主、文明、和谐的社会主义现代化国家</a>
+        <b>世界霸主</b>
+        <c>资本主义强国</c>
+        <d>文化帝国</d>
+        <answer>1</answer>
+    </exercises>
+
+    <exercises id="4">
+        <subject>4. 实现中华民族伟大复兴的关键是？（）</subject>
+        <a>经济改革</a>
+        <b>政治制度改革</b>
+        <c>党的领导</c>
+        <d>外交政策</d>
+        <answer>3</answer>
+    </exercises>
+
+    <exercises id="5">
+        <subject>5. 中华民族伟大复兴的历史起点通常被认为是？（）</subject>
+        <a>辛亥革命</a>
+        <b>抗日战争胜利</b>
+        <c>新中国成立</c>
+        <d>改革开放</d>
+        <answer>3</answer>
+    </exercises>
+</infos>

@@ -1,14 +1,15 @@
 package com.example.myapplication.ui.exercise.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.myapplication.R;
+import com.example.myapplication.ui.exercise.ExercisesDetailActivity;
 import com.example.myapplication.ui.exercise.bean.ExercisesBean;
 
 import java.util.List;
@@ -45,7 +46,7 @@ public class ExercisesAdapter extends BaseAdapter {
         final ViewHolder vh;
         if(convertView==null){
             vh=new ViewHolder();
-            convertView= LayoutInflater.from(mContext).inflate(R.layout.exericises_list_item,null);
+            convertView= LayoutInflater.from(mContext).inflate(R.layout.exercises_list_item,null);
             vh.title=convertView.findViewById(R.id.tv_title);
             vh.content=convertView.findViewById(R.id.tv_content);
             vh.order=convertView.findViewById(R.id.tv_order);
@@ -60,14 +61,16 @@ public class ExercisesAdapter extends BaseAdapter {
             vh.content.setText(bean.content);
             vh.order.setBackgroundResource(bean.background);
         }
-        convertView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        convertView.setOnClickListener((view)->{
                 if(bean==null){
                     return;
                 }
-            }
-        });
+                //跳转到习题详情页面
+                Intent intent=new Intent(mContext, ExercisesDetailActivity.class);
+                intent.putExtra("id",bean.id);
+                intent.putExtra("title",bean.title);
+                mContext.startActivity(intent);
+            });
         return convertView;
     }
     class ViewHolder{
