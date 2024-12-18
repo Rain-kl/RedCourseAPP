@@ -17,12 +17,14 @@ import androidx.fragment.app.Fragment;
 import com.example.myapplication.databinding.FragmentMeBinding;
 import com.example.myapplication.db.UserDBHelper;
 import com.example.myapplication.model.User;
+import com.example.myapplication.utils.SharedPreferencesLoadUser;
 
 public class MeFragment extends Fragment {
 
     private FragmentMeBinding binding;
     private User user;
     private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
     private UserDBHelper userDBHelper;
     private int userId;
 
@@ -42,7 +44,7 @@ public class MeFragment extends Fragment {
 
     public void loadUserInfo() {
         // 此时可以安全地使用 sharedPreferences
-        Toast.makeText(getContext(), "User ID: " +userId, Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), "User ID: " + userId, Toast.LENGTH_SHORT).show();
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -61,6 +63,10 @@ public class MeFragment extends Fragment {
                 tvUsername.setText(user.getUsername());
                 TextView tvUserID = binding.tvUserId;
                 tvUserID.setText("UID: " + user.getId());
+
+                SharedPreferencesLoadUser sharedPreferencesLoadUser = new SharedPreferencesLoadUser(sharedPreferences);
+                sharedPreferencesLoadUser.setUser(user);
+
             } else {
                 Toast.makeText(getContext(), "查询失败", Toast.LENGTH_SHORT).show();
                 //可以根据自己实际情况处理

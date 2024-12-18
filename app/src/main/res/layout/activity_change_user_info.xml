@@ -18,7 +18,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="修改用户信息"
+            android:text="个人信息"
             android:textColor="@android:color/black"
             android:textSize="18sp" />
     </androidx.appcompat.widget.Toolbar>
