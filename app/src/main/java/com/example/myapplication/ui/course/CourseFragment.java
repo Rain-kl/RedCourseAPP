@@ -7,12 +7,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import com.example.myapplication.R;
 import com.example.myapplication.databinding.FragmentCourseBinding;
 
 import java.util.ArrayList;
@@ -20,10 +18,6 @@ import java.util.List;
 
 public class CourseFragment extends Fragment {
     ListView1Adapter listAdapter;
-    private final int[] res = new int[]{
-            R.drawable.ad_1,
-            R.drawable.ad_2,
-            R.drawable.ad_3};
     private final List<CourseBean> listData = new ArrayList<>();
 
     private FragmentCourseBinding binding;
