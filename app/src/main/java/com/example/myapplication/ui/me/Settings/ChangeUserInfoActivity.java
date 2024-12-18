@@ -1,13 +1,18 @@
 package com.example.myapplication.ui.me.Settings;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.graphics.Insets;
@@ -20,13 +25,15 @@ import com.example.myapplication.model.User;
 
 public class ChangeUserInfoActivity extends AppCompatActivity {
     private User user;
-    private SharedPreferences sharedPreferences;
+    private SharedPreferences sp;
     private UserDBHelper userDBHelper;
 
     public void loadUserInfo() {
-        sharedPreferences = getSharedPreferences("data", Context.MODE_PRIVATE);
+        sp = getSharedPreferences("data", Context.MODE_PRIVATE);
         userDBHelper = new UserDBHelper(this);
-        user = userDBHelper.getUserById(sharedPreferences.getInt("user_id", -1));
+        user = userDBHelper.getUserById(sp.getInt("user_id", -1));
+
+
 
         TextView tvUsername = findViewById(R.id.tv_username);
         TextView tvUserID = findViewById(R.id.tv_user_id);
@@ -40,7 +47,7 @@ public class ChangeUserInfoActivity extends AppCompatActivity {
             tvPhone.setText(user.getPhone());
             rvRegisterTime.setText(user.getRegisterDate());
         }
-        Toast.makeText(this, "User ID: " + sharedPreferences.getInt("user_id", -1), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "User ID: " + sp.getInt("user_id", -1), Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -64,5 +71,53 @@ public class ChangeUserInfoActivity extends AppCompatActivity {
         });
         loadUserInfo();
 
+        RelativeLayout rlSetUsername = findViewById(R.id.rl_set_username);
+        RelativeLayout rlSetPhone = findViewById(R.id.rl_set_phone);
+
+        rlSetUsername.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 设置用户名
+                showEditDialog("用户名", user.getUsername());
+            }
+        });
+        rlSetPhone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showEditDialog("手机号", user.getPhone());
+
+            }
+        });
+    }
+
+    private void showEditDialog(String title, String currentValue) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.dialog_edit_info, null);
+        final EditText etInput = dialogView.findViewById(R.id.et_input);
+        etInput.setText(currentValue);
+        if (title.equals("用户名")) {
+            builder.setView(dialogView)
+                    .setTitle("修改" + title)
+                    .setPositiveButton("确定", (dialog, which) -> {
+                        String newValue = etInput.getText().toString();
+                        user.setUsername(newValue);
+                        userDBHelper.updateUser(user);
+                        Toast.makeText(this, "修改成功", Toast.LENGTH_SHORT).show();
+                    })
+                    .setNegativeButton("取消", null);
+        } else if (title.equals("手机号")) {
+            builder.setView(dialogView)
+                    .setTitle("修改" + title)
+                    .setPositiveButton("确定", (dialog, which) -> {
+                        String newValue = etInput.getText().toString();
+                        user.setPhone(newValue);
+                        userDBHelper.updateUser(user);
+                        Toast.makeText(this, "修改成功", Toast.LENGTH_SHORT).show();
+                    })
+                    .setNegativeButton("取消", null);
+        }
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 }
