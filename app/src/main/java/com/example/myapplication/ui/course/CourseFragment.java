@@ -10,6 +10,7 @@ import android.widget.ListView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.myapplication.databinding.FragmentCourseBinding;
 
@@ -17,9 +18,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CourseFragment extends Fragment {
-    ListView1Adapter listAdapter;
-    private final List<CourseBean> listData = new ArrayList<>();
-
+    private ListView1Adapter listAdapter;
+    private List<CourseBean> listData = new ArrayList<>();
     private FragmentCourseBinding binding;
 
     @SuppressLint("ShowToast")
@@ -29,35 +29,40 @@ public class CourseFragment extends Fragment {
         binding = FragmentCourseBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         ListView listView = binding.lvCourse;
-         listAdapter = new ListView1Adapter(getContext(), listData);
-        listView.setAdapter(listAdapter);
 
-        // 填充 listData 数据
-        fillListData();
+        // 初始化ViewModel
+        CourseViewModel viewModel = new ViewModelProvider(this).get(CourseViewModel.class);
 
-        listView.setOnItemClickListener((parent, view, position, id) -> {
-            Intent intent = new Intent(getContext(), VideoPlaybackActivity.class);
-            intent.putExtra("position", position); // 将点击的位置传递给 VideoPlaybackActivity
-            startActivity(intent);
+        // 观察LiveData并在数据变化时更新UI
+        viewModel.getCourses().observe(getViewLifecycleOwner(), courses -> {
+            listData.clear();
+            listData.addAll(courses);
+            listAdapter = new ListView1Adapter(getContext(), listData);
+            listView.setAdapter(listAdapter);
+            setupListViewClickListener();
         });
+
+        // 加载课程数据（这应该在后台线程中进行）
+        viewModel.loadCourses();
+
         return root;
     }
-    private void fillListData() {
-        String[] imageUrls = {
-                "http://159.75.231.207:9000/red/image/carousel/carousel_1.jpg",
-                "http://159.75.231.207:9000/red/image/carousel/carousel_2.jpg", // 修正了文件名错误
-                "http://159.75.231.207:9000/red/image/carousel/carousel_3.jpg"
-        };
 
+    private void setupListViewClickListener() {
+        binding.lvCourse.setOnItemClickListener((parent, view, position, id) -> {
+            // 获取选中项的数据
+            CourseBean selectedCourse = listData.get(position);
 
-        for (int i = 0; i < imageUrls.length; i++) {
-            // 假设CourseBean有一个接受String类型的构造函数，用于存储图片URL
-            listData.add(new CourseBean(imageUrls[i], "课程" + (i + 1)));
-        }
+            // 创建Intent并设置要传递的数据
+            Intent intent = new Intent(getContext(), VideoPlaybackActivity.class);
+            intent.putExtra("position", position); // 传递位置（如果需要）
+            intent.putExtra("id", selectedCourse.getImageUrl()); // 传递图片URL
+            intent.putExtra("title", selectedCourse.getTitle()); // 传递标题
+            intent.putExtra("desc", selectedCourse.getDesc()); // 传递描述
 
-
-
-        listAdapter.notifyDataSetChanged();
+            // 启动新Activity
+            startActivity(intent);
+        });
     }
 
     @Override

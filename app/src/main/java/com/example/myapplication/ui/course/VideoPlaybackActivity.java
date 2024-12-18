@@ -3,6 +3,7 @@ package com.example.myapplication.ui.course;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -26,11 +27,8 @@ public class VideoPlaybackActivity extends AppCompatActivity {
     private StyledPlayerView playerView;
     private ExoPlayer player;
     private SimpleCache simpleCache;
-    private String[] videoUrls = {
-            "http://159.75.231.207:9000/red/video/v_1.mp4",
-            "http://159.75.231.207:9000/red/video/v_2.mp4",
-            "http://159.75.231.207:9000/red/video/v_3.mp4"
-    };
+
+    private final String URL= "http://159.75.231.207:9000/red/video/v_";
     private int position;
 
     @Override
@@ -47,9 +45,14 @@ public class VideoPlaybackActivity extends AppCompatActivity {
 
         // 获取从 CourseFragment 传递过来的位置
         Intent intent = getIntent();
-        position = intent.getIntExtra("position", 0); // 默认位置为0
+        position = intent.getIntExtra("position", 0);
+        String desc = intent.getStringExtra("desc");
+        String title = intent.getStringExtra("title");
+        TextView tv_title = findViewById(R.id.tv_video_title);
+        tv_title.setText(title);
+        TextView tv_desc = findViewById(R.id.tv_video_desc);
+        tv_desc.setText(desc);
     }
-
     @Override
     protected void onStart() {
         super.onStart();
@@ -66,9 +69,7 @@ public class VideoPlaybackActivity extends AppCompatActivity {
         if (player == null) {
             player = new ExoPlayer.Builder(this).build();
             playerView.setPlayer(player);
-
-            // 根据位置获取视频URL
-            String videoUrl = videoUrls[position];
+            String videoUrl = String.format("%s%d.mp4", URL,position+1);
             Uri videoUri = Uri.parse(videoUrl);
 
             // 创建带有缓存功能的数据源
@@ -104,5 +105,4 @@ public class VideoPlaybackActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
-    }
-}
+    }}
