@@ -17,7 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="250dp"
             android:layout_alignParentTop="true"
-            android:layout_marginTop="0dp"
+            android:layout_marginTop="3dp"
             android:scaleType="fitCenter" />
 
     </RelativeLayout>
@@ -31,18 +31,18 @@
         android:padding="16dp">
 
         <TextView
-            android:id="@+id/title"
+            android:id="@+id/tv_video_title"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:textFontWeight="1"
             android:layout_weight="3"
             android:text="标题"
             android:textColor="@color/black"
+            android:textFontWeight="1"
             android:textSize="20sp"
             android:textStyle="bold" />
         <!-- 描述文本 -->
         <TextView
-            android:id="@+id/description"
+            android:id="@+id/tv_video_desc"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
