@@ -1,6 +1,7 @@
 package com.example.myapplication.utils;
 
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import com.example.myapplication.db.UserDBHelper;
 import com.example.myapplication.model.User;
@@ -21,8 +22,10 @@ public class LoginUtils {
     public int login(String phone, String password) {
         User user = db.getUserByPhone(phone);
         if (user == null) {
+            Log.d("LoginUtils", "User not found");
             return LOGIN_FAIL;
         } else if (!user.getPassword().equals(MD5Util.md5(password))) {
+            Log.d("LoginUtils", "Password incorrect");
             return LOGIN_FAIL;
         } else {
             SharedPreferences.Editor editor = sharedPreferences.edit();

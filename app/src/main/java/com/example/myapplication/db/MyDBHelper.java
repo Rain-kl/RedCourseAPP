@@ -30,6 +30,9 @@ public class MyDBHelper extends SQLiteOpenHelper {
     public static final String KEY_USER_FOREIGN_ID = "user_id"; // 外键关联到用户表
     public static final String KEY_CONTENT_ID = "content_id"; // 假设您有一个内容ID
     public static final String KEY_WATCH_DATE = "watch_date";
+    public static final String KEY_VIDEO_TITLE = "video_title";
+    public static final String KEY_VIDEO_THUMBNAIL = "video_thumbnail";
+
 
     // 收藏表名
     public static final String TABLE_FAVORITES = "favorites";
@@ -51,9 +54,13 @@ public class MyDBHelper extends SQLiteOpenHelper {
             + KEY_HISTORY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
             + KEY_USER_FOREIGN_ID + " INTEGER,"
             + KEY_CONTENT_ID + " TEXT,"
-            + KEY_WATCH_DATE + " DATETIME DEFAULT CURRENT_TIMESTAMP,"
+            + KEY_WATCH_DATE + " DATETIME DEFAULT CURRENT_TIMESTAMP," // 观看时间
+            + KEY_VIDEO_TITLE + " TEXT,"
+            + KEY_VIDEO_THUMBNAIL + " TEXT,"
             + "FOREIGN KEY(" + KEY_USER_FOREIGN_ID + ") REFERENCES " + TABLE_USERS + "(" + KEY_USER_ID + ")"
             + ")";
+
+    // 创建收藏表的 SQL 语句
     private static final String CREATE_TABLE_FAVORITES = "CREATE TABLE " + TABLE_FAVORITES + "("
             + KEY_FAVORITE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
             + KEY_USER_FOREIGN_ID + " INTEGER,"
