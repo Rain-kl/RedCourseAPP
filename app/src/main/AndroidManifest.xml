@@ -24,9 +24,6 @@
             android:name=".ui.me.Settings.ChangeUserInfoActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.exercise.MainActivity"
-            android:exported="false" />
-        <activity
             android:name=".ui.exercise.ExercisesDetailActivity"
             android:exported="false" />
         <activity
