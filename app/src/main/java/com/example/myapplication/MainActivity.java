@@ -34,9 +34,9 @@ public class MainActivity extends AppCompatActivity {
         User testUser = new User("testuser", "password123", "123456789");
         if (db.isPhoneExists(testUser.getPhone())) {
             Toast.makeText(this, "用户已存在，开始登录", Toast.LENGTH_SHORT).show();
-            testUser = db.getUserByPhone(testUser.getPhone());
+            User db_user = db.getUserByPhone(testUser.getPhone());
 
-            int status = loginUtils.login(testUser.getPhone(), testUser.getPassword());
+            int status = loginUtils.login(db_user.getPhone(), testUser.getPassword());
             if (status == loginUtils.LOGIN_SUCCESS) {
                 Toast.makeText(this, "登录成功", Toast.LENGTH_SHORT).show();
             } else {

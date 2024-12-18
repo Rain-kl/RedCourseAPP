@@ -4,14 +4,19 @@ public class WatchHistory {
     private int id;
     private int userId;
     private String contentId;
-    private String watchDate;
-    // ... 其他观看历史字段
+    private String title;
+    private String thumbnailUrl;
+    private String watchData;
 
-    // 构造函数
+
+    // ... 其他观看历史字段
     public WatchHistory() {
     }
 
-    public WatchHistory(int userId, String contentId) {
+    // 构造函数
+    public WatchHistory(int userId, String contentId, String title, String thumbnailUrl) {
+        this.title = title;
+        this.thumbnailUrl = thumbnailUrl;
         this.userId = userId;
         this.contentId = contentId;
     }
@@ -41,13 +46,28 @@ public class WatchHistory {
         this.contentId = contentId;
     }
 
-    public String getWatchDate() {
-        return watchDate;
+    public String getTitle() {
+        return title;
     }
 
-    public void setWatchDate(String watchDate) {
-        this.watchDate = watchDate;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    // ... (为其他字段添加 getters 和 setters)
+
+    public String getThumbnailUrl() {
+        return thumbnailUrl;
+    }
+
+    public void setThumbnailUrl(String thumbnailUrl) {
+        this.thumbnailUrl = thumbnailUrl;
+    }
+
+    public String getWatchData() {
+        return watchData;
+    }
+
+    public void setWatchData(String watchData) {
+        this.watchData = watchData;
+    }
 }
