@@ -1,19 +1,20 @@
 package com.example.myapplication.ui.course;
+
 public class CourseBean {
     private String title;
-    private int imgResId;
+    private String imgUrl;
 
-    public CourseBean(int imgResId, String title) {
-        this.imgResId = imgResId;
+
+    public CourseBean(String imgUrl, String title) {
+        this.imgUrl = imgUrl;
         this.title = title;
     }
-// 构造函数、getter 和 setter 方法...
 
     public String getTitle() {
         return title;
     }
 
-    public int getImgResId() {
-        return imgResId;
+    public String getImageUrl() {
+        return imgUrl;
     }
 }

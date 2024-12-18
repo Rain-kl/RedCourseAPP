@@ -30,7 +30,7 @@
                     android:layout_height="match_parent"
                     android:contentDescription="TODO"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/ad_3"/>
+                    />
 
             </androidx.cardview.widget.CardView>
 
