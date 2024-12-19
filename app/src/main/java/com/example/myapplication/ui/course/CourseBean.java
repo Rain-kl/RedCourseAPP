@@ -1,4 +1,4 @@
-package com.example.myapplication.db.course;
+package com.example.myapplication.ui.course;
 
 public class CourseBean {
     private static String title;

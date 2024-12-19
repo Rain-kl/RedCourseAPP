@@ -1,4 +1,4 @@
-package com.example.myapplication.db.course;
+package com.example.myapplication.ui.course;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
