@@ -50,8 +50,35 @@ jobs:
         env:
           BUILD_TOOLS_VERSION: "34.0.0"
 
+      - name: create release folder
+        run: mkdir ${{ env.main_project_module }}/release
+
+      - name: Move signed APK to release folder
+        run: mv ${{ env.main_project_module }}/build/outputs/apk/release/*signed.apk ${{ env.main_project_module }}/release/
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: false
+          prerelease: false
+
+      - name: Upload server release asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ${{ env.main_project_module }}/release/
+          asset_name:
+          asset_content_type: application/octet-stream
+
       - name: Upload APK Release - ${{ env.repository_name }}
         uses: actions/upload-artifact@v4
         with:
           name: ${{ env.date_today }} - ${{ env.repository_name }} - APK Release
-          path: ${{ env.main_project_module }}/build/outputs/apk/release/*.apk
+          path: ${{ env.main_project_module }}/release/
