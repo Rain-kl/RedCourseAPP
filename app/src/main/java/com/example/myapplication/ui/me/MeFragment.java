@@ -95,8 +95,8 @@ public class MeFragment extends Fragment {
         llFavorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent intent = new Intent(getActivity(), FavoriteActivity.class);
-//                startActivity(intent);
+                Intent intent = new Intent(getActivity(), FavoriteActivity.class);
+                startActivity(intent);
             }
         });
 

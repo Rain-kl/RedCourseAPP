@@ -5,6 +5,7 @@ public class WatchHistory {
     private int userId;
     private String contentId;
     private String title;
+    private String desc;
     private String thumbnailUrl;
     private String watchData;
 
@@ -14,11 +15,12 @@ public class WatchHistory {
     }
 
     // 构造函数
-    public WatchHistory(int userId, String contentId, String title, String thumbnailUrl) {
+    public WatchHistory(int userId, String contentId, String title,String desc, String thumbnailUrl) {
         this.title = title;
         this.thumbnailUrl = thumbnailUrl;
         this.userId = userId;
         this.contentId = contentId;
+        this.desc = desc;
     }
 
     // Getters and Setters
@@ -69,5 +71,13 @@ public class WatchHistory {
 
     public void setWatchData(String watchData) {
         this.watchData = watchData;
+    }
+
+    public String getDesc() {
+        return desc;
+    }
+
+    public void setDesc(String desc) {
+        this.desc = desc;
     }
 }

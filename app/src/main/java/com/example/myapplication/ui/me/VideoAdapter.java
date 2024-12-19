@@ -1,7 +1,9 @@
 package com.example.myapplication.ui.me;
 
+
 import com.example.myapplication.R; // Replace with your app's package name
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +15,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.myapplication.model.WatchHistory;
+import com.example.myapplication.ui.course.CourseBean;
+import com.example.myapplication.ui.course.VideoPlaybackActivity;
 
 import java.util.List;
 
@@ -53,6 +57,20 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.VideoViewHol
                 if (currentPosition != RecyclerView.NO_POSITION) {
                     WatchHistory clickedItem = videoList.get(currentPosition);
                     Toast.makeText(context, clickedItem.getTitle(), Toast.LENGTH_SHORT).show();
+
+//                    CourseBean selectedCourse = listData.get(position);
+
+                    // 创建Intent并设置要传递的数据
+                    Intent intent = new Intent(context, VideoPlaybackActivity.class);
+                    intent.putExtra("position", currentPosition); // 传递位置（如果需要）
+                    intent.putExtra("id", clickedItem.getThumbnailUrl()); // 传递图片URL
+                    intent.putExtra("title", clickedItem.getTitle()); // 传递标题
+                    intent.putExtra("desc", clickedItem.getDesc()); // 传递描述
+
+                    // 启动新Activity
+                    context.startActivity(intent);
+
+
                 }
             }
         });
