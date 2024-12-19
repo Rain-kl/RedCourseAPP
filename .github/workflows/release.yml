@@ -67,13 +67,19 @@ jobs:
           draft: false
           prerelease: false
 
+      - name: Find Signed APK
+        id: find_apk
+        run: |
+          APK_FILE=$(find ${{ env.main_project_module }}/release/ -name "*signed.apk" -print -quit)
+          echo "APK_FILE=$APK_FILE" >> $GITHUB_OUTPUT
+
       - name: Upload server release asset
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ${{ env.main_project_module }}/release/*signed.apk  # Correct path
+          asset_path: ${{ steps.find_apk.outputs.APK_FILE }} # Use the found file path
           asset_name: ${{ env.repository_name }}-${{ env.VERSION_NAME }}-signed.apk
           asset_content_type: application/vnd.android.package-archive
 
