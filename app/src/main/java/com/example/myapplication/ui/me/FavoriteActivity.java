@@ -1,5 +1,6 @@
 package com.example.myapplication.ui.me;
 
+import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
@@ -15,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.R;
+import com.example.myapplication.db.FavoriteDBHelper;
 import com.example.myapplication.db.WatchHistoryDBHelper;
 import com.example.myapplication.model.User;
 import com.example.myapplication.model.WatchHistory;
@@ -23,14 +25,14 @@ import com.example.myapplication.utils.SharedPreferencesLoadUser;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HistoryActivity extends AppCompatActivity {
-    private RecyclerView historyRecyclerView;
+public class FavoriteActivity extends AppCompatActivity {
+    private RecyclerView favoriteRecyclerView;
     private VideoAdapter videoAdapter;
     private List<WatchHistory> videoItemList;
 
     SharedPreferences sharedPreferences;
     SharedPreferencesLoadUser sharedPreferencesLoadUser;
-    WatchHistoryDBHelper watchHistoryDBHelper;
+    FavoriteDBHelper favoriteDBHelper;
     User user;
 
     public void loadUserInfo() {
@@ -40,10 +42,10 @@ public class HistoryActivity extends AppCompatActivity {
 
     }
 
-    public void createTestWatchHistory() {
-        watchHistoryDBHelper = new WatchHistoryDBHelper(this);
-        WatchHistory watchHistory = new WatchHistory(user.getId(),"1", "锻刀大赛","胡大狗", "http://159.75.231.207:9000/red/video/v_1.png");
-        watchHistoryDBHelper.addWatchHistory(watchHistory);
+    public void createTestFavorite() {
+        favoriteDBHelper = new FavoriteDBHelper(this);
+        WatchHistory watchHistory = new WatchHistory(user.getId(), "1", "锻刀大赛2","胡大狗", "http://159.75.231.207:9000/red/video/v_2.png");
+        favoriteDBHelper.addFavorite(watchHistory);
     }
 
     @Override
@@ -56,9 +58,11 @@ public class HistoryActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        loadUserInfo();
+//        createTestFavorite();
 
         Toolbar toolbar = findViewById(R.id.video_list_toolbar);
-        toolbar.setTitle("历史记录");
+        toolbar.setTitle("收藏");
         setSupportActionBar(toolbar);
 
         // Handle back button
@@ -68,25 +72,26 @@ public class HistoryActivity extends AppCompatActivity {
                 finish(); // Close the activity
             }
         });
-        loadUserInfo();
+
         // Initialize the list and adapter
-        historyRecyclerView = findViewById(R.id.history_recycler_view);
+        favoriteRecyclerView = findViewById(R.id.history_recycler_view);
         videoItemList = new ArrayList<>();
         videoAdapter = new VideoAdapter(this, videoItemList);
 
         // Set up RecyclerView
-        historyRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        historyRecyclerView.setAdapter(videoAdapter);
+        favoriteRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        favoriteRecyclerView.setAdapter(videoAdapter);
 
         // Add dummy data
         populateVideoList();
     }
 
 
+    @SuppressLint("NotifyDataSetChanged")
     private void populateVideoList() {
-        watchHistoryDBHelper = new WatchHistoryDBHelper(this);
-        List<WatchHistory> historyList = watchHistoryDBHelper.getWatchHistory(user.getId());
-        videoItemList.addAll(historyList);
+        favoriteDBHelper = new FavoriteDBHelper(this);
+        List<WatchHistory> favoriteList = favoriteDBHelper.getFavorite(user.getId());
+        videoItemList.addAll(favoriteList);
 
         videoAdapter.notifyDataSetChanged();
     }
