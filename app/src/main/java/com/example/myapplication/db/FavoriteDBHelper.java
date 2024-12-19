@@ -14,6 +14,7 @@ public class FavoriteDBHelper extends MyDBHelper {
     public FavoriteDBHelper(Context context) {
         super(context);
     }
+
     // 添加观看历史
     public void addFavorite(WatchHistory watchHistory) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -36,9 +37,9 @@ public class FavoriteDBHelper extends MyDBHelper {
         List<WatchHistory> historyList = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
 
-        Cursor cursor = db.query(TABLE_FAVORITES, new String[] {
-                KEY_FAVORITE_ID, KEY_USER_FOREIGN_ID, KEY_CONTENT_ID, KEY_FAVORITE_DATE,KEY_VIDEO_TITLE,KEY_VIDEO_THUMBNAIL,KEY_VIDEO_DESC
-        }, KEY_USER_FOREIGN_ID + "=?", new String[] { String.valueOf(userId) }, null, null, KEY_FAVORITE_DATE + " DESC", null);
+        Cursor cursor = db.query(TABLE_FAVORITES, new String[]{
+                KEY_FAVORITE_ID, KEY_USER_FOREIGN_ID, KEY_CONTENT_ID, KEY_FAVORITE_DATE, KEY_VIDEO_TITLE, KEY_VIDEO_THUMBNAIL, KEY_VIDEO_DESC
+        }, KEY_USER_FOREIGN_ID + "=?", new String[]{String.valueOf(userId)}, null, null, KEY_FAVORITE_DATE + " DESC", null);
 
         if (cursor.moveToFirst()) {
             do {
@@ -60,6 +61,12 @@ public class FavoriteDBHelper extends MyDBHelper {
         db.close();
 
         return historyList;
+    }
+
+    public void deleteFavorite(int userId, String contentId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_FAVORITES, KEY_USER_FOREIGN_ID + " = ? AND " + KEY_CONTENT_ID + " = ?", new String[]{String.valueOf(userId), contentId});
+        db.close();
     }
 
 

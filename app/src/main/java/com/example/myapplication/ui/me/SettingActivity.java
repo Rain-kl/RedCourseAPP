@@ -21,6 +21,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.myapplication.R;
 import com.example.myapplication.db.UserDBHelper;
+import com.example.myapplication.login.LoginActivity;
 import com.example.myapplication.model.User;
 import com.example.myapplication.ui.me.Settings.ChangeUserInfoActivity;
 import com.example.myapplication.ui.me.Settings.DeleteAccountActivity;
@@ -30,11 +31,12 @@ import com.example.myapplication.utils.SharedPreferencesLoadUser;
 public class SettingActivity extends AppCompatActivity {
     SharedPreferences sp;
     UserDBHelper userDBHelper = new UserDBHelper(this);
+    SharedPreferencesLoadUser sharedPreferencesLoadUser;
     User user;
 
     private void loadUserInfo() {
         sp = getSharedPreferences("data", MODE_PRIVATE);
-        SharedPreferencesLoadUser sharedPreferencesLoadUser = new SharedPreferencesLoadUser(sp);
+        sharedPreferencesLoadUser = new SharedPreferencesLoadUser(sp);
         user = sharedPreferencesLoadUser.getUser();
     }
 
@@ -48,6 +50,7 @@ public class SettingActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        loadUserInfo();
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -117,7 +120,19 @@ public class SettingActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // 处理账号与安全点击事件
-                Toast.makeText(SettingActivity.this, "账号与安全", Toast.LENGTH_SHORT).show();
+                AlertDialog.Builder builder = new AlertDialog.Builder(SettingActivity.this);
+                builder.setTitle("退出登录")
+                        .setMessage("确定要退出登录吗？")
+                        .setPositiveButton("确定", (dialog, which) -> {
+                            sharedPreferencesLoadUser.clearUser();
+                            Toast.makeText(SettingActivity.this, "退出成功", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(SettingActivity.this, LoginActivity.class);
+                            // 清除任务栈并创建新任务
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            startActivity(intent);
+                        })
+                        .setNegativeButton("取消", null)
+                        .show();
             }
         });
 

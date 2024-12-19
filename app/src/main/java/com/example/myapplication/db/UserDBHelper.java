@@ -16,18 +16,23 @@ public class UserDBHelper extends MyDBHelper {
         }
     }
 
-    public long addUser(User user) {
-        SQLiteDatabase db = this.getWritableDatabase();
+    public boolean addUser(User user) {
+        try {
+            SQLiteDatabase db = this.getWritableDatabase();
 
-        ContentValues values = new ContentValues();
-        values.put(KEY_USERNAME, user.getUsername());
-        values.put(KEY_PASSWORD, user.getPassword());
-        values.put(KEY_PHONE, user.getPhone());
-        // ... 添加其他个人信息
+            ContentValues values = new ContentValues();
+            values.put(KEY_USERNAME, user.getUsername());
+            values.put(KEY_PASSWORD, user.getPassword());
+            values.put(KEY_PHONE, user.getPhone());
+            // ... 添加其他个人信息
 
-        long id = db.insert(TABLE_USERS, null, values);
-        db.close();
-        return id;
+            long id = db.insert(TABLE_USERS, null, values);
+            db.close();
+            return id != -1;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     // 根据用户ID获取用户
