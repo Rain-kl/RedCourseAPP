@@ -74,7 +74,7 @@ jobs:
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: ${{ env.main_project_module }}/release/
-          asset_name:
+          asset_name: ${{ env.main_project_module }}-release-${{ env.date_today }}.apk
           asset_content_type: application/octet-stream
 
       - name: Upload APK Release - ${{ env.repository_name }}
