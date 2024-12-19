@@ -50,12 +50,6 @@ jobs:
         env:
           BUILD_TOOLS_VERSION: "34.0.0"
 
-      - name: create release folder
-        run: mkdir ${{ env.main_project_module }}/release
-
-      - name: Move signed APK to release folder
-        run: mv ${{ env.main_project_module }}/build/outputs/apk/release/*signed.apk ${{ env.main_project_module }}/release/
-
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
@@ -66,7 +60,6 @@ jobs:
           release_name: Release ${{ github.ref }}
           draft: false
           prerelease: false
-
 
       - name: Upload server release asset
         uses: actions/upload-release-asset@v1
