@@ -15,7 +15,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.myapplication.model.WatchHistory;
-import com.example.myapplication.ui.course.CourseBean;
 import com.example.myapplication.ui.course.VideoPlaybackActivity;
 
 import java.util.List;

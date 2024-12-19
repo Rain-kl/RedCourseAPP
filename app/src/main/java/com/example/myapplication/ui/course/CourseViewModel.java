@@ -58,11 +58,10 @@ public class CourseViewModel extends ViewModel {
         List<CourseBean> listData = new ArrayList<>();
         for (int i = 0; i < jsonArray.length(); i++) {
             JSONObject item = jsonArray.getJSONObject(i);
-            int id = item.getInt("videoId");
+            String id = item.getString("videoId");
             String title = item.getString("title");
             String desc = item.getString("desc");
-            String imageUrl = "http://159.75.231.207:9000/red/video/v_" + id + ".png";
-            listData.add(new CourseBean(imageUrl, title, desc));
+            listData.add(new CourseBean(id, title, desc));
         }
         return listData;
     }
