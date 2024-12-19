@@ -43,6 +43,6 @@
             android:singleLine="true"
             android:textColor="@color/black"
             android:textSize="16sp"
-            android:paddingLeft="15dp"/>
+            android:layout_marginLeft="12dp"/>
     </LinearLayout>
 </LinearLayout>

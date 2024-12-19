@@ -1,5 +1,6 @@
 package com.example.myapplication.ui.course;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
@@ -8,12 +9,16 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.myapplication.R;
+import com.example.myapplication.db.FavoriteDBHelper;
+import com.example.myapplication.model.User;
+import com.example.myapplication.model.WatchHistory;
 import com.google.android.exoplayer2.ExoPlayer;
 import com.google.android.exoplayer2.MediaItem;
 import com.google.android.exoplayer2.source.ProgressiveMediaSource;
@@ -32,7 +37,8 @@ public class VideoPlaybackActivity extends AppCompatActivity {
     private StyledPlayerView playerView;
     private ExoPlayer player;
     private SimpleCache simpleCache;
-    private boolean isLandscape = false;
+    private boolean isFavorite = false;
+    String uriTest;
 
     private int position;
 
@@ -58,17 +64,11 @@ public class VideoPlaybackActivity extends AppCompatActivity {
         position = intent.getIntExtra("position", 0);
         String desc = intent.getStringExtra("desc");
         String title = intent.getStringExtra("title");
-
-        ImageView iv_back = findViewById(R.id.iv_video_back);
-        ImageView iv_handoff = findViewById(R.id.iv_video_handoff);
-
-        // 设置按钮点击事件
-        iv_back.setOnClickListener(v -> onBackPressed());
-        iv_handoff.setOnClickListener(v -> toggleScreenOrientation());
-
         TextView tv_title = findViewById(R.id.tv_video_title);
         tv_title.setText(title);
         TextView tv_desc = findViewById(R.id.tv_video_desc);
+        ImageView iv_video_star = findViewById(R.id.iv_video_star);
+        iv_video_star.setOnClickListener(v -> toggleFavorite());
         tv_desc.setText(desc);
     }
 
@@ -84,15 +84,6 @@ public class VideoPlaybackActivity extends AppCompatActivity {
         releasePlayer();
     }
 
-    private void toggleScreenOrientation() {
-        if (!isLandscape) {
-            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-        } else {
-            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        }
-        isLandscape = !isLandscape;
-    }
-
     @Override
     public void onBackPressed() {
         super.onBackPressed();
@@ -102,20 +93,41 @@ public class VideoPlaybackActivity extends AppCompatActivity {
     @Override
     public void onConfigurationChanged(@NonNull Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
+        boolean isLandscape = false;
         if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
             isLandscape = true;
+            // 确保在横屏时，控制面板和其他控件也能正确显示和隐藏
+            // 这里可以根据需要调整UI逻辑
         } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
             isLandscape = false;
+            // 同上，确保在竖屏时，UI能正确调整
+        }
+    }
+    private void toggleFavorite() {
+        FavoriteDBHelper favoriteDBHelper = new FavoriteDBHelper(this);
+        User user = new User();
+        WatchHistory watchHistory = new WatchHistory(user.getId(), CourseBean.getId(), CourseBean.getTitle(), CourseBean.getDesc(), uriTest);
+        //TODO
+        isFavorite = !isFavorite;
+        ImageView iv_video_star = findViewById(R.id.iv_video_star);
+        if (isFavorite) {
+            iv_video_star.setImageResource(R.drawable.baseline_star_rate_24); // 已收藏图标
+            Toast.makeText(this, "已收藏", Toast.LENGTH_SHORT).show();
+        } else {
+            iv_video_star.setImageResource(R.drawable.baseline_star_outline_24); // 未收藏图标
+            Toast.makeText(this, "取消收藏", Toast.LENGTH_SHORT).show();
         }
     }
 
+    @SuppressLint("DefaultLocale")
     private void initializePlayer() {
         try {
             if (player == null) {
                 player = new ExoPlayer.Builder(this).build();
                 playerView.setPlayer(player);
-                String URL = "http://159.75.231.207:9000/red/video/v_";
-                String videoUrl = String.format("%s%d.mp4", URL, position + 1);
+                uriTest = String.format("http://159.75.231.207:9000/red/video/v_%d.mp4",(position+1));
+
+                String videoUrl = String.format(uriTest);
                 Uri videoUri = Uri.parse(videoUrl);
 
                 DataSource.Factory upstreamFactory = new DefaultHttpDataSource.Factory();

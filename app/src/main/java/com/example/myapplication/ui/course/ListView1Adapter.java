@@ -1,5 +1,6 @@
 package com.example.myapplication.ui.course;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
@@ -60,11 +61,12 @@ public class ListView1Adapter extends BaseAdapter {
         }
 
         // 直接获取当前位置的数据对象
-        CourseBean bean = data.get(position);
+        @SuppressLint("DefaultLocale") String uriTest = String.format("http://159.75.231.207:9000/red/video/v_%d.png",(position+1));
+
         holder.tv_title.setText(CourseBean.getTitle());
 
         Glide.with(context)
-                .load(bean.getImageUrl())
+                .load(uriTest)
                 .listener(new RequestListener<Drawable>() {
                     @Override
                     public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
