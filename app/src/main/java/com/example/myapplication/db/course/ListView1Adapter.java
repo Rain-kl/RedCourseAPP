@@ -1,4 +1,4 @@
-package com.example.myapplication.ui.course;
+package com.example.myapplication.db.course;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -61,7 +61,7 @@ public class ListView1Adapter extends BaseAdapter {
 
         // 直接获取当前位置的数据对象
         CourseBean bean = data.get(position);
-        holder.tv_title.setText(bean.getTitle());
+        holder.tv_title.setText(CourseBean.getTitle());
 
         Glide.with(context)
                 .load(bean.getImageUrl())
@@ -84,7 +84,7 @@ public class ListView1Adapter extends BaseAdapter {
     }
 
 
-    class ViewHolder {
+    static class ViewHolder {
         TextView tv_title;
         ImageView iv_img;
     }

@@ -1,4 +1,4 @@
-package com.example.myapplication.ui.course;
+package com.example.myapplication.db.course;
 
 import android.util.Log;
 

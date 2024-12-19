@@ -11,7 +11,6 @@
         android:layout_height="260dp"
         android:background="@color/white">
 
-
         <com.google.android.exoplayer2.ui.StyledPlayerView
             android:id="@+id/video_view"
             android:layout_width="match_parent"
@@ -20,6 +19,29 @@
             android:layout_marginTop="3dp"
             android:scaleType="fitCenter" />
 
+        <ImageView
+            android:id="@+id/iv_video_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/twotone_arrow_back_24"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/iv_video_handoff"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="10dp"
+            android:paddingRight="80dp"
+            android:paddingBottom="27dp"
+            android:src="@drawable/outline_screenshot_frame_2_24"
+            android:visibility="gone"/>
     </RelativeLayout>
 
     <!-- 标题和描述区域 -->
@@ -30,26 +52,55 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-        <TextView
-            android:id="@+id/tv_video_title"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="3"
-            android:text="标题"
-            android:textColor="@color/black"
-            android:textFontWeight="1"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            android:layout_height="100dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_weight="1"
+                android:text="标题"
+                android:textColor="@color/black"
+                android:textFontWeight="1"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_video_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:textColor="@color/black"
+                android:textFontWeight="1"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+        </LinearLayout>
         <!-- 描述文本 -->
-        <TextView
-            android:id="@+id/tv_video_desc"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="简介"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="8"
+                android:text="简介"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_video_desc"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+        </LinearLayout>
     </LinearLayout>
 
 
