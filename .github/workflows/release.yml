@@ -5,8 +5,8 @@ env:
 
 on:
   push:
-    branches:
-      - master
+    tags:
+      - 'v*.*.*'
 
 jobs:
   build:
