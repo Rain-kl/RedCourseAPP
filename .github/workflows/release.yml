@@ -9,8 +9,21 @@ on:
       - 'v*.*.*'
 
 jobs:
-  build:
+  prepare:
     runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.set-ver.outputs.version }}
+    steps:
+      - id: set-ver
+        run: |
+          echo "version=$(date -d "8 hour" -u +3.%y.%m%d%H)" >> $GITHUB_OUTPUT
+          
+
+  build:
+    needs: prepare
+    runs-on: ubuntu-latest
+    env:
+      VERSION: ${{ needs.prepare.outputs.version }}
     steps:
       - uses: actions/checkout@v4
 
