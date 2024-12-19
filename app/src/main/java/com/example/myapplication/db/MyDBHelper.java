@@ -12,6 +12,13 @@ public class MyDBHelper extends SQLiteOpenHelper {
     // 数据库名称
     private static final String DATABASE_NAME = "AppDatabase";
 
+    //VideoOBJ
+    public static final String KEY_VIDEO_TITLE = "video_title";
+    public static final String KEY_VIDEO_DESC = "video_desc";
+    public static final String KEY_VIDEO_THUMBNAIL = "video_thumbnail";
+    public static final String KEY_CONTENT_ID = "content_id"; // 假设您有一个内容ID
+
+
     // 用户信息表名
     public static final String TABLE_USERS = "users";
     // 用户信息表列名
@@ -20,6 +27,8 @@ public class MyDBHelper extends SQLiteOpenHelper {
     public static final String KEY_PASSWORD = "password";
     public static final String KEY_PHONE = "phone";
     public static final String KEY_REGISTER_DATE = "register_date"; // 添加注册时间字段
+    public static final String KEY_USER_FOREIGN_ID = "user_id"; // 外键关联到用户表
+
 
     // ... 其他个人信息字段
 
@@ -27,19 +36,14 @@ public class MyDBHelper extends SQLiteOpenHelper {
     public static final String TABLE_WATCH_HISTORY = "watch_history";
     // 观看历史表列名
     public static final String KEY_HISTORY_ID = "id";
-    public static final String KEY_USER_FOREIGN_ID = "user_id"; // 外键关联到用户表
-    public static final String KEY_CONTENT_ID = "content_id"; // 假设您有一个内容ID
     public static final String KEY_WATCH_DATE = "watch_date";
-    public static final String KEY_VIDEO_TITLE = "video_title";
-    public static final String KEY_VIDEO_THUMBNAIL = "video_thumbnail";
 
 
     // 收藏表名
     public static final String TABLE_FAVORITES = "favorites";
     // 收藏表列名
     public static final String KEY_FAVORITE_ID = "id";
-    //  其余KEY_USER_FOREIGN_ID，KEY_CONTENT_ID已经创建过了
-    public static final String KEY_FAVORITE_DATE = "favorite_date"; // 添加收藏时间字段
+    public static final String KEY_FAVORITE_DATE = "favorite_date";
 
     // 创建用户表的 SQL 语句
     private static final String CREATE_TABLE_USERS = "CREATE TABLE " + TABLE_USERS + "("
@@ -56,6 +60,7 @@ public class MyDBHelper extends SQLiteOpenHelper {
             + KEY_CONTENT_ID + " TEXT,"
             + KEY_WATCH_DATE + " DATETIME DEFAULT CURRENT_TIMESTAMP," // 观看时间
             + KEY_VIDEO_TITLE + " TEXT,"
+            + KEY_VIDEO_DESC + " TEXT,"
             + KEY_VIDEO_THUMBNAIL + " TEXT,"
             + "FOREIGN KEY(" + KEY_USER_FOREIGN_ID + ") REFERENCES " + TABLE_USERS + "(" + KEY_USER_ID + ")"
             + ")";
@@ -66,6 +71,9 @@ public class MyDBHelper extends SQLiteOpenHelper {
             + KEY_USER_FOREIGN_ID + " INTEGER,"
             + KEY_CONTENT_ID + " TEXT,"
             + KEY_FAVORITE_DATE + " DATETIME DEFAULT CURRENT_TIMESTAMP," // 收藏时间
+            + KEY_VIDEO_TITLE + " TEXT,"
+            + KEY_VIDEO_DESC + " TEXT,"
+            + KEY_VIDEO_THUMBNAIL + " TEXT,"
             + "FOREIGN KEY(" + KEY_USER_FOREIGN_ID + ") REFERENCES " + TABLE_USERS + "(" + KEY_USER_ID + ")"
             + ")";
 
