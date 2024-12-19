@@ -30,6 +30,16 @@ public class SharedPreferencesLoadUser {
         editor.putString("register_date", user.getRegisterDate());
         editor.putString("password", user.getPassword());
         editor.apply();
+    }
 
+    public void clearUser() {
+        SharedPreferences.Editor editor;
+        editor = sharedPreferences.edit();
+        editor.remove("user_id");
+        editor.remove("username");
+        editor.remove("phone");
+        editor.remove("register_date");
+        editor.remove("password");
+        editor.apply();
     }
 }

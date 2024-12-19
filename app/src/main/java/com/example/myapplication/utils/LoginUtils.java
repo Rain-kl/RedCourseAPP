@@ -12,11 +12,13 @@ public class LoginUtils {
 
     private final SharedPreferences sharedPreferences;
     private final UserDBHelper db;
+    private final SharedPreferencesLoadUser sharedPreferencesLoadUser;
 
 
     public LoginUtils(UserDBHelper db, SharedPreferences sharedPreferences) {
         this.db = db;
         this.sharedPreferences = sharedPreferences;
+        sharedPreferencesLoadUser = new SharedPreferencesLoadUser(sharedPreferences);
     }
 
     public int login(String phone, String password) {
@@ -28,9 +30,7 @@ public class LoginUtils {
             Log.d("LoginUtils", "Password incorrect");
             return LOGIN_FAIL;
         } else {
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putInt("user_id", user.getId());
-            editor.apply();
+            sharedPreferencesLoadUser.setUser(user);
             return LOGIN_SUCCESS;
         }
     }

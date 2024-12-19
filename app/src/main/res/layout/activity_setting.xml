@@ -229,7 +229,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="8dp"
                             android:layout_toStartOf="@id/arrow_about"
-                            android:text="v2.60.0"
+                            android:text="v1.0.0"
                             android:textColor="@android:color/darker_gray"
                             android:textSize="14sp" />
 
