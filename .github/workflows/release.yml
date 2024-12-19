@@ -73,9 +73,9 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ${{ env.main_project_module }}/release/
-          asset_name: ${{ env.main_project_module }}-release-${{ env.date_today }}.apk
-          asset_content_type: application/octet-stream
+          asset_path: ${{ env.main_project_module }}/release/*signed.apk  # Correct path
+          asset_name: ${{ env.repository_name }}-${{ env.VERSION_NAME }}-signed.apk
+          asset_content_type: application/vnd.android.package-archive
 
       - name: Upload APK Release - ${{ env.repository_name }}
         uses: actions/upload-artifact@v4
