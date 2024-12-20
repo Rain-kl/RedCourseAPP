@@ -87,8 +87,8 @@ public class CourseFragment extends Fragment {
 
             // 创建Intent并设置要传递的数据
             Intent intent = new Intent(getContext(), VideoPlaybackActivity.class);
-            intent.putExtra("position", position); // 传递位置（如果需要）
-            intent.putExtra("id", selectedCourseBean.getId());
+            intent.putExtra("position", position+1); // 传递位置（如果需要）
+            intent.putExtra("id", String.valueOf(selectedCourseBean.getId()));
             intent.putExtra("title", selectedCourseBean.getTitle()); // 传递标题
             intent.putExtra("desc", selectedCourseBean.getDesc()); // 传递描述
 

@@ -43,11 +43,11 @@ public class VideoPlaybackActivity extends AppCompatActivity {
     private ExoPlayer player;
     private SimpleCache simpleCache;
     private String uriTest;
-    private int position;
     private User user;
     private CourseBean courseBean;
     private String desc;
     private String title;
+    private int id;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -70,7 +70,7 @@ public class VideoPlaybackActivity extends AppCompatActivity {
 
         // 获取从 CourseFragment 传递过来的位置和其他信息
         Intent intent = getIntent();
-        position = intent.getIntExtra("position", 0);
+        id = Integer.parseInt(intent.getStringExtra("id"));
         desc = intent.getStringExtra("desc");
         title = intent.getStringExtra("title");
 
@@ -80,7 +80,7 @@ public class VideoPlaybackActivity extends AppCompatActivity {
         ImageView iv_video_star = findViewById(R.id.iv_video_star);
 
         // 从 SharedPreferences 加载收藏状态
-        boolean isFavorite = loadFavoriteStatus(position);
+        boolean isFavorite = loadFavoriteStatus(id);
         iv_video_star.setImageResource(isFavorite ? R.drawable.baseline_star_rate_24 : R.drawable.baseline_star_outline_24);
 
         iv_video_star.setOnClickListener(v -> toggleFavorite());
@@ -120,25 +120,25 @@ public class VideoPlaybackActivity extends AppCompatActivity {
     }
 
     private void toggleFavorite() {
-        @SuppressLint("DefaultLocale") String uriTest = String.format("http://159.75.231.207:9000/red/video/v_%d.png", (position + 1));
-        @SuppressLint("DefaultLocale") String positionTest = String.format("%d", (position + 1));
+        @SuppressLint("DefaultLocale") String uriImgTest = String.format("http://159.75.231.207:9000/red/video/v_%d.png", id);
+        @SuppressLint("DefaultLocale") String strId = String.format("%d", id);
         FavoriteDBHelper favoriteDBHelper = new FavoriteDBHelper(this);
 
-        WatchHistory watchHistory = new WatchHistory(user.getId(), positionTest, title, desc, uriTest);
+        WatchHistory watchHistory = new WatchHistory(user.getId(), strId, title, desc, uriImgTest);
 
         // 从 SharedPreferences 读取最新的收藏状态
-        boolean isFavorite = loadFavoriteStatus(position);
+        boolean isFavorite = loadFavoriteStatus(id);
 
         ImageView iv_video_star = findViewById(R.id.iv_video_star);
         if (!isFavorite) {
             iv_video_star.setImageResource(R.drawable.baseline_star_rate_24); // 已收藏图标
             favoriteDBHelper.addFavorite(watchHistory);
-            saveFavoriteStatus(position, true);
+            saveFavoriteStatus(id, true);
             Toast.makeText(this, "已收藏", Toast.LENGTH_SHORT).show();
         } else {
             iv_video_star.setImageResource(R.drawable.baseline_star_outline_24); // 未收藏图标
-            favoriteDBHelper.deleteFavorite(user.getId(), positionTest);
-            saveFavoriteStatus(position, false);
+            favoriteDBHelper.deleteFavorite(user.getId(), strId);
+            saveFavoriteStatus(id, false);
             Toast.makeText(this, "取消收藏", Toast.LENGTH_SHORT).show();
         }
     }
@@ -149,7 +149,7 @@ public class VideoPlaybackActivity extends AppCompatActivity {
             if (player == null) {
                 player = new ExoPlayer.Builder(this).build();
                 playerView.setPlayer(player);
-                uriTest = String.format("http://159.75.231.207:9000/red/video/v_%d.mp4", (position + 1));
+                uriTest = String.format("http://159.75.231.207:9000/red/video/v_%d.mp4", id);
 
                 String videoUrl = String.format(uriTest);
                 Uri videoUri = Uri.parse(videoUrl);
