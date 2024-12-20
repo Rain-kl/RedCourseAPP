@@ -56,13 +56,17 @@ public class ListView1Adapter extends BaseAdapter {
             convertView = LayoutInflater.from(context).inflate(R.layout.course_list_item, null);
             holder.tv_title = convertView.findViewById(R.id.tv_item_title);
             holder.iv_img = convertView.findViewById(R.id.iv_item_img);
+            holder.tv_loading = convertView.findViewById(R.id.tv_loading);  // 假设你在布局文件中已经定义了这个 TextView
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
 
+        // 显示加载中的文本
+        holder.tv_loading.setVisibility(View.VISIBLE);
+
         // 直接获取当前位置的数据对象
-        @SuppressLint("DefaultLocale") String uriTest = String.format("http://159.75.231.207:9000/red/video/v_%d.png",(position+1));
+        @SuppressLint("DefaultLocale") String uriTest = String.format("http://159.75.231.207:9000/red/video/v_%d.png", (position + 1));
 
         holder.tv_title.setText(courseBean.getTitle());
 
@@ -72,12 +76,14 @@ public class ListView1Adapter extends BaseAdapter {
                     @Override
                     public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
                         Log.e("Glide", "Load failed", e);
+                        holder.tv_loading.setVisibility(View.GONE);  // 加载失败时隐藏加载中的文本
                         return false;
                     }
 
                     @Override
                     public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
                         Log.d("Glide", "Load successful");
+                        holder.tv_loading.setVisibility(View.GONE);  // 加载成功时隐藏加载中的文本
                         return false;
                     }
                 })
@@ -88,7 +94,7 @@ public class ListView1Adapter extends BaseAdapter {
 
 
     static class ViewHolder {
-        TextView tv_title;
+        TextView tv_title, tv_loading;
         ImageView iv_img;
     }
 
