@@ -69,5 +69,4 @@ public class FavoriteDBHelper extends MyDBHelper {
         db.close();
     }
 
-
 }

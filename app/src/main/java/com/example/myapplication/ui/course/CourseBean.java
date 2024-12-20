@@ -1,26 +1,25 @@
 package com.example.myapplication.ui.course;
 
 public class CourseBean {
-    private static String title;
-    private static String id;
-    private static String desc;
+    private String title;
+    private String id;
+    private String desc;
 
     public CourseBean(String id, String title, String desc) {
-        CourseBean.id = id;
-        CourseBean.title = title;
-        CourseBean.desc = desc;
+        this.id = id;
+        this.title = title;
+        this.desc = desc;
     }
 
-    public static String getTitle() {
+    public String getTitle() {
         return title;
     }
 
-    public static String getId() {
+    public String getId() {
         return id;
     }
 
-    public static String getDesc() {
+    public String getDesc() {
         return desc;
     }
-
 }

@@ -50,6 +50,7 @@ public class ListView1Adapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
+        CourseBean courseBean = data.get(position);
         if (convertView == null) {
             holder = new ViewHolder();
             convertView = LayoutInflater.from(context).inflate(R.layout.course_list_item, null);
@@ -63,7 +64,7 @@ public class ListView1Adapter extends BaseAdapter {
         // 直接获取当前位置的数据对象
         @SuppressLint("DefaultLocale") String uriTest = String.format("http://159.75.231.207:9000/red/video/v_%d.png",(position+1));
 
-        holder.tv_title.setText(CourseBean.getTitle());
+        holder.tv_title.setText(courseBean.getTitle());
 
         Glide.with(context)
                 .load(uriTest)

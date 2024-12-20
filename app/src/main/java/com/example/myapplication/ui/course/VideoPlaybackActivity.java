@@ -36,14 +36,18 @@ import java.io.File;
 public class VideoPlaybackActivity extends AppCompatActivity {
 
     private static final String TAG = "VideoPlaybackActivity";
+    private static final String PREFS_NAME = "favorite_prefs";
+    private static final String PREF_KEY_IS_FAVORITE = "is_favorite";
+
     private StyledPlayerView playerView;
     private ExoPlayer player;
     private SimpleCache simpleCache;
-    private boolean isFavorite = false;
-    String uriTest;
-
+    private String uriTest;
     private int position;
     private User user;
+    private CourseBean courseBean;
+    private String desc;
+    private String title;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -67,12 +71,18 @@ public class VideoPlaybackActivity extends AppCompatActivity {
         // 获取从 CourseFragment 传递过来的位置和其他信息
         Intent intent = getIntent();
         position = intent.getIntExtra("position", 0);
-        String desc = intent.getStringExtra("desc");
-        String title = intent.getStringExtra("title");
+        desc = intent.getStringExtra("desc");
+        title = intent.getStringExtra("title");
+
         TextView tv_title = findViewById(R.id.tv_video_title);
         tv_title.setText(title);
         TextView tv_desc = findViewById(R.id.tv_video_desc);
         ImageView iv_video_star = findViewById(R.id.iv_video_star);
+
+        // 从 SharedPreferences 加载收藏状态
+        boolean isFavorite = loadFavoriteStatus(position);
+        iv_video_star.setImageResource(isFavorite ? R.drawable.baseline_star_rate_24 : R.drawable.baseline_star_outline_24);
+
         iv_video_star.setOnClickListener(v -> toggleFavorite());
         tv_desc.setText(desc);
     }
@@ -110,19 +120,25 @@ public class VideoPlaybackActivity extends AppCompatActivity {
     }
 
     private void toggleFavorite() {
+        @SuppressLint("DefaultLocale") String uriTest = String.format("http://159.75.231.207:9000/red/video/v_%d.png", (position + 1));
+        @SuppressLint("DefaultLocale") String positionTest = String.format("%d", (position + 1));
         FavoriteDBHelper favoriteDBHelper = new FavoriteDBHelper(this);
 
-        WatchHistory watchHistory = new WatchHistory(user.getId(), CourseBean.getId(), CourseBean.getTitle(), CourseBean.getDesc(), uriTest);
+        WatchHistory watchHistory = new WatchHistory(user.getId(), positionTest, title, desc, uriTest);
 
-        isFavorite = !isFavorite;
+        // 从 SharedPreferences 读取最新的收藏状态
+        boolean isFavorite = loadFavoriteStatus(position);
+
         ImageView iv_video_star = findViewById(R.id.iv_video_star);
-        if (isFavorite) {
+        if (!isFavorite) {
             iv_video_star.setImageResource(R.drawable.baseline_star_rate_24); // 已收藏图标
             favoriteDBHelper.addFavorite(watchHistory);
+            saveFavoriteStatus(position, true);
             Toast.makeText(this, "已收藏", Toast.LENGTH_SHORT).show();
         } else {
             iv_video_star.setImageResource(R.drawable.baseline_star_outline_24); // 未收藏图标
-            favoriteDBHelper.deleteFavorite(user.getId(), CourseBean.getId());
+            favoriteDBHelper.deleteFavorite(user.getId(), positionTest);
+            saveFavoriteStatus(position, false);
             Toast.makeText(this, "取消收藏", Toast.LENGTH_SHORT).show();
         }
     }
@@ -173,5 +189,23 @@ public class VideoPlaybackActivity extends AppCompatActivity {
                 Log.e(TAG, "Error releasing cache", e);
             }
         }
+    }
+
+    private String generatePreferenceKey(int position) {
+        return "favorite_" + position;
+    }
+
+    private void saveFavoriteStatus(int position, boolean isFavorite) {
+        SharedPreferences prefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        String key = generatePreferenceKey(position);
+        editor.putBoolean(key, isFavorite);
+        editor.apply();
+    }
+
+    private boolean loadFavoriteStatus(int position) {
+        SharedPreferences prefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+        String key = generatePreferenceKey(position);
+        return prefs.getBoolean(key, false);
     }
 }
