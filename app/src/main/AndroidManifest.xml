@@ -36,7 +36,9 @@
         <activity
             android:name=".ui.me.SettingActivity"
             android:exported="false" />
-        <activity android:name=".ui.course.VideoPlaybackActivity" />
+        <activity android:name=".ui.course.VideoPlaybackActivity"
+            android:configChanges="orientation|screenSize">
+        </activity>
 
         <activity
             android:name=".login.LoginActivity"

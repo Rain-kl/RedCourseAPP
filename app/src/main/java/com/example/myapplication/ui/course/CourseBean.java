@@ -2,21 +2,25 @@ package com.example.myapplication.ui.course;
 
 public class CourseBean {
     private static String title;
-    private String imgUrl;
-    private static String desc; // 新增属性
+    private static String id;
+    private static String desc;
 
-    public CourseBean(String imgUrl, String title, String desc) {
-        this.imgUrl = imgUrl;
+    public CourseBean(String id, String title, String desc) {
+        CourseBean.id = id;
         CourseBean.title = title;
         CourseBean.desc = desc;
     }
+
     public static String getTitle() {
         return title;
     }
-    public String getImageUrl() {
-        return imgUrl;
+
+    public static String getId() {
+        return id;
     }
+
     public static String getDesc() {
         return desc;
     }
+
 }
