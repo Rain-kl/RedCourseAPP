@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.myapplication.MainActivity;
 import com.example.myapplication.R;
 import com.example.myapplication.db.UserDBHelper;
+import com.example.myapplication.model.User;
 import com.example.myapplication.utils.LoginUtils;
 import com.example.myapplication.utils.SharedPreferencesLoadUser;
 
@@ -36,7 +37,16 @@ public class LoginActivity extends AppCompatActivity {
     private boolean checkLogin() {
 //        Toast.makeText(this, "用户已登录", Toast.LENGTH_SHORT).show();
         int userId = sharedPreferences.getInt("user_id", -1);
-        return userId != -1;
+        if (userId != -1) {
+            User user = sharedPreferencesLoadUser.getUser();
+            if (userDBHelper.isPhoneExists(user.getPhone())) {
+                return true;
+            } else {
+                sharedPreferencesLoadUser.clearUser();
+                return false;
+            }
+        }
+        return false;
     }
 
     private void LoginPass() {

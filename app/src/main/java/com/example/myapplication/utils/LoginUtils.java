@@ -9,15 +9,12 @@ import com.example.myapplication.model.User;
 public class LoginUtils {
     public final int LOGIN_SUCCESS = 1;
     public final int LOGIN_FAIL = 0;
-
-    private final SharedPreferences sharedPreferences;
     private final UserDBHelper db;
     private final SharedPreferencesLoadUser sharedPreferencesLoadUser;
 
 
     public LoginUtils(UserDBHelper db, SharedPreferences sharedPreferences) {
         this.db = db;
-        this.sharedPreferences = sharedPreferences;
         sharedPreferencesLoadUser = new SharedPreferencesLoadUser(sharedPreferences);
     }
 
@@ -35,9 +32,7 @@ public class LoginUtils {
         }
     }
 
-    public void logout(User user) {
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.remove("user_id");
-        editor.apply();
+    public void logout() {
+        sharedPreferencesLoadUser.clearUser();
     }
 }
