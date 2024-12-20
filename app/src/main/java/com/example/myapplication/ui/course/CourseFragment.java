@@ -21,11 +21,12 @@ import com.example.myapplication.model.User;
 import com.example.myapplication.model.WatchHistory;
 import com.example.myapplication.utils.SharedPreferencesLoadUser;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class CourseFragment extends Fragment {
+
+    // 成员变量声明
     private ListView1Adapter listAdapter;
     private final List<CourseBean> listData = new ArrayList<>();
     private FragmentCourseBinding binding;
@@ -41,19 +42,18 @@ public class CourseFragment extends Fragment {
         user = sharedPreferencesLoadUser.getUser();
     }
 
-
-    @SuppressLint("ShowToast")
+    @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-
+        // 初始化绑定对象
         binding = FragmentCourseBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         ListView listView = binding.lvCourse;
 
-        // 初始化ViewModel
+        // 初始化 ViewModel
         CourseViewModel viewModel = new ViewModelProvider(this).get(CourseViewModel.class);
 
-        // 观察LiveData并在数据变化时更新UI
+        // 观察 LiveData 并在数据变化时更新 UI
         viewModel.getCourses().observe(getViewLifecycleOwner(), courses -> {
             listData.clear();
             listData.addAll(courses);
@@ -68,13 +68,17 @@ public class CourseFragment extends Fragment {
         return root;
     }
 
+    /**
+     * 设置 ListView 的点击监听器
+     */
     private void setupListViewClickListener() {
         binding.lvCourse.setOnItemClickListener((parent, view, position, id) -> {
             // 动态获取选中的 CourseBean 对象
             CourseBean selectedCourseBean = listData.get(position);
 
             // 构建 WatchHistory 对象
-            @SuppressLint("DefaultLocale") String uriText = String.format("http://159.75.231.207:9000/red/video/v_%d.png", (position + 1));
+            @SuppressLint("DefaultLocale")
+            String uriText = String.format("http://159.75.231.207:9000/red/video/v_%d.png", (position + 1));
             WatchHistoryDBHelper watchHistoryDBHelper = new WatchHistoryDBHelper(getContext());
             WatchHistory watchHistory = new WatchHistory(
                     user.getId(),
@@ -85,14 +89,14 @@ public class CourseFragment extends Fragment {
             );
             watchHistoryDBHelper.addWatchHistory(watchHistory);
 
-            // 创建Intent并设置要传递的数据
+            // 创建 Intent 并设置要传递的数据
             Intent intent = new Intent(getContext(), VideoPlaybackActivity.class);
-            intent.putExtra("position", position+1); // 传递位置（如果需要）
-            intent.putExtra("id", String.valueOf(selectedCourseBean.getId()));
+            intent.putExtra("position", position + 1); // 传递位置（如果需要）
+            intent.putExtra("id", String.valueOf(selectedCourseBean.getId())); // 传递 ID
             intent.putExtra("title", selectedCourseBean.getTitle()); // 传递标题
             intent.putExtra("desc", selectedCourseBean.getDesc()); // 传递描述
 
-            // 启动新Activity
+            // 启动新 Activity
             startActivity(intent);
         });
     }
