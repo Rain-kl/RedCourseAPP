@@ -2,6 +2,7 @@ package com.example.myapplication.ui.course;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.net.Uri;
@@ -19,6 +20,7 @@ import com.example.myapplication.R;
 import com.example.myapplication.db.FavoriteDBHelper;
 import com.example.myapplication.model.User;
 import com.example.myapplication.model.WatchHistory;
+import com.example.myapplication.utils.SharedPreferencesLoadUser;
 import com.google.android.exoplayer2.ExoPlayer;
 import com.google.android.exoplayer2.MediaItem;
 import com.google.android.exoplayer2.source.ProgressiveMediaSource;
@@ -41,11 +43,14 @@ public class VideoPlaybackActivity extends AppCompatActivity {
     String uriTest;
 
     private int position;
+    private User user;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.video_playback);
+        SharedPreferencesLoadUser sharedPreferencesLoadUser = new SharedPreferencesLoadUser(getSharedPreferences("data", MODE_PRIVATE));
+        user = sharedPreferencesLoadUser.getUser();
 
         // 初始化缓存（如果尚未初始化）
         if (simpleCache == null) {
@@ -103,18 +108,21 @@ public class VideoPlaybackActivity extends AppCompatActivity {
             // 同上，确保在竖屏时，UI能正确调整
         }
     }
+
     private void toggleFavorite() {
         FavoriteDBHelper favoriteDBHelper = new FavoriteDBHelper(this);
-        User user = new User();
+
         WatchHistory watchHistory = new WatchHistory(user.getId(), CourseBean.getId(), CourseBean.getTitle(), CourseBean.getDesc(), uriTest);
-        //TODO
+
         isFavorite = !isFavorite;
         ImageView iv_video_star = findViewById(R.id.iv_video_star);
         if (isFavorite) {
             iv_video_star.setImageResource(R.drawable.baseline_star_rate_24); // 已收藏图标
+            favoriteDBHelper.addFavorite(watchHistory);
             Toast.makeText(this, "已收藏", Toast.LENGTH_SHORT).show();
         } else {
             iv_video_star.setImageResource(R.drawable.baseline_star_outline_24); // 未收藏图标
+            favoriteDBHelper.deleteFavorite(user.getId(), CourseBean.getId());
             Toast.makeText(this, "取消收藏", Toast.LENGTH_SHORT).show();
         }
     }
@@ -125,7 +133,7 @@ public class VideoPlaybackActivity extends AppCompatActivity {
             if (player == null) {
                 player = new ExoPlayer.Builder(this).build();
                 playerView.setPlayer(player);
-                uriTest = String.format("http://159.75.231.207:9000/red/video/v_%d.mp4",(position+1));
+                uriTest = String.format("http://159.75.231.207:9000/red/video/v_%d.mp4", (position + 1));
 
                 String videoUrl = String.format(uriTest);
                 Uri videoUri = Uri.parse(videoUrl);

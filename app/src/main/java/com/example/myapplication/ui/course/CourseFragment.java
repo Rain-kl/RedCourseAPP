@@ -1,7 +1,9 @@
 package com.example.myapplication.ui.course;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,9 +15,11 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.myapplication.databinding.FragmentCourseBinding;
+import com.example.myapplication.db.UserDBHelper;
 import com.example.myapplication.db.WatchHistoryDBHelper;
 import com.example.myapplication.model.User;
 import com.example.myapplication.model.WatchHistory;
+import com.example.myapplication.utils.SharedPreferencesLoadUser;
 
 
 import java.util.ArrayList;
@@ -23,8 +27,20 @@ import java.util.List;
 
 public class CourseFragment extends Fragment {
     private ListView1Adapter listAdapter;
-    private List<CourseBean> listData = new ArrayList<>();
+    private final List<CourseBean> listData = new ArrayList<>();
     private FragmentCourseBinding binding;
+
+    private User user;
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        // 初始化 SharedPreferences 和 UserDBHelper
+        SharedPreferences sharedPreferences = context.getSharedPreferences("data", Context.MODE_PRIVATE);
+        SharedPreferencesLoadUser sharedPreferencesLoadUser = new SharedPreferencesLoadUser(sharedPreferences);
+        user = sharedPreferencesLoadUser.getUser();
+    }
+
 
     @SuppressLint("ShowToast")
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -55,10 +71,10 @@ public class CourseFragment extends Fragment {
     private void setupListViewClickListener() {
         binding.lvCourse.setOnItemClickListener((parent, view, position, id) -> {
             // 获取选中项的数据
-            User user = new User();
-            @SuppressLint("DefaultLocale") String uriText = String.format("http://159.75.231.207:9000/red/video/v_%d.png",(position+1));
+
+            @SuppressLint("DefaultLocale") String uriText = String.format("http://159.75.231.207:9000/red/video/v_%d.png", (position + 1));
             WatchHistoryDBHelper watchHistoryDBHelper = new WatchHistoryDBHelper(getContext());
-            WatchHistory watchHistory = new WatchHistory(user.getId(),CourseBean.getId(),CourseBean.getTitle(),CourseBean.getDesc(),
+            WatchHistory watchHistory = new WatchHistory(user.getId(), CourseBean.getId(), CourseBean.getTitle(), CourseBean.getDesc(),
                     uriText);
             watchHistoryDBHelper.addWatchHistory(watchHistory);
             // 创建Intent并设置要传递的数据
