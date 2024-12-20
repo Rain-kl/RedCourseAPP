@@ -29,7 +29,7 @@ public class CourseFragment extends Fragment {
     private ListView1Adapter listAdapter;
     private final List<CourseBean> listData = new ArrayList<>();
     private FragmentCourseBinding binding;
-
+    private CourseBean courseBean;
     private User user;
 
     @Override
@@ -70,19 +70,27 @@ public class CourseFragment extends Fragment {
 
     private void setupListViewClickListener() {
         binding.lvCourse.setOnItemClickListener((parent, view, position, id) -> {
-            // 获取选中项的数据
+            // 动态获取选中的 CourseBean 对象
+            CourseBean selectedCourseBean = listData.get(position);
 
+            // 构建 WatchHistory 对象
             @SuppressLint("DefaultLocale") String uriText = String.format("http://159.75.231.207:9000/red/video/v_%d.png", (position + 1));
             WatchHistoryDBHelper watchHistoryDBHelper = new WatchHistoryDBHelper(getContext());
-            WatchHistory watchHistory = new WatchHistory(user.getId(), CourseBean.getId(), CourseBean.getTitle(), CourseBean.getDesc(),
-                    uriText);
+            WatchHistory watchHistory = new WatchHistory(
+                    user.getId(),
+                    selectedCourseBean.getId(),
+                    selectedCourseBean.getTitle(),
+                    selectedCourseBean.getDesc(),
+                    uriText
+            );
             watchHistoryDBHelper.addWatchHistory(watchHistory);
+
             // 创建Intent并设置要传递的数据
             Intent intent = new Intent(getContext(), VideoPlaybackActivity.class);
             intent.putExtra("position", position); // 传递位置（如果需要）
-            intent.putExtra("id", CourseBean.getId());
-            intent.putExtra("title", CourseBean.getTitle()); // 传递标题
-            intent.putExtra("desc", CourseBean.getDesc()); // 传递描述
+            intent.putExtra("id", selectedCourseBean.getId());
+            intent.putExtra("title", selectedCourseBean.getTitle()); // 传递标题
+            intent.putExtra("desc", selectedCourseBean.getDesc()); // 传递描述
 
             // 启动新Activity
             startActivity(intent);
