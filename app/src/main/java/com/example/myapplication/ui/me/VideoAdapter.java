@@ -55,14 +55,11 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.VideoViewHol
                 int currentPosition = holder.getAdapterPosition(); // Get the current position
                 if (currentPosition != RecyclerView.NO_POSITION) {
                     WatchHistory clickedItem = videoList.get(currentPosition);
-                    Toast.makeText(context, clickedItem.getTitle(), Toast.LENGTH_SHORT).show();
-
-//                    CourseBean selectedCourse = listData.get(position);
-
+//                    Toast.makeText(context, clickedItem.getTitle(), Toast.LENGTH_SHORT).show();
                     // 创建Intent并设置要传递的数据
                     Intent intent = new Intent(context, VideoPlaybackActivity.class);
-                    intent.putExtra("position", currentPosition); // 传递位置（如果需要）
-                    intent.putExtra("id", clickedItem.getThumbnailUrl()); // 传递图片URL
+//                    intent.putExtra("position", currentPosition); // 传递位置（如果需要）
+                    intent.putExtra("id", String.valueOf(clickedItem.getContentId())); // 传递视频ID
                     intent.putExtra("title", clickedItem.getTitle()); // 传递标题
                     intent.putExtra("desc", clickedItem.getDesc()); // 传递描述
 
