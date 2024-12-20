@@ -5,13 +5,17 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -59,6 +63,31 @@ public class VideoPlaybackActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.video_playback);
+
+        // 创建一个全屏的遮罩层
+        View overlay = new View(this);
+        overlay.setBackgroundColor(Color.WHITE);
+        overlay.setLayoutParams(new FrameLayout.LayoutParams(
+                FrameLayout.LayoutParams.MATCH_PARENT,
+                FrameLayout.LayoutParams.MATCH_PARENT
+        ));
+
+        // 将遮罩层添加到根布局
+        ((RelativeLayout) findViewById(R.id.root_layout)).addView(overlay);
+
+        // 立即初始化视图和数据
+        initViewsAndData();
+
+        // 使用 Handler 实现 0.5 秒的延迟
+        new Handler().postDelayed(() -> {
+            // 延迟结束，移除遮罩层
+            ((RelativeLayout) findViewById(R.id.root_layout)).removeView(overlay);
+        }, 500); // 500 毫秒即 0.5 秒
+    }
+
+
+
+    private void initViewsAndData() {
         SharedPreferencesLoadUser sharedPreferencesLoadUser = new SharedPreferencesLoadUser(getSharedPreferences("data", MODE_PRIVATE));
         user = sharedPreferencesLoadUser.getUser();
 
@@ -100,12 +129,16 @@ public class VideoPlaybackActivity extends AppCompatActivity {
         // 根据当前屏幕方向调整 UI
         adjustUIForOrientation(getResources().getConfiguration().orientation);
         hideStatusBarOnLandscape(getResources().getConfiguration().orientation);
+
+        // 初始化播放器
+        initializePlayer();
     }
+
 
     @Override
     protected void onStart() {
         super.onStart();
-        initializePlayer();
+        // initializePlayer(); // 移除这里的调用
     }
 
     @Override
