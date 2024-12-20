@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">My Application</string>
+    <string name="app_name">红色学堂</string>
     <string name="title_course">课程</string>
     <string name="title_exercise">习题</string>
     <string name="title_me">我的</string>
