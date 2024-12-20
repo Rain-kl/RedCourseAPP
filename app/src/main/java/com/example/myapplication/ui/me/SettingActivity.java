@@ -95,13 +95,6 @@ public class SettingActivity extends AppCompatActivity {
                 Toast.makeText(SettingActivity.this, "账号与安全", Toast.LENGTH_SHORT).show();
             }
         });
-        privacy.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // 处理账号与安全点击事件
-                Toast.makeText(SettingActivity.this, "账号与安全", Toast.LENGTH_SHORT).show();
-            }
-        });
         countDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -109,11 +102,26 @@ public class SettingActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        privacy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(SettingActivity.this);
+                builder.setTitle("隐私信息")
+                        .setMessage("balabalabala...\n")
+                        .setPositiveButton("确定", null)
+                        .show();
+            }
+        });
+
         about.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // 处理账号与安全点击事件
-                Toast.makeText(SettingActivity.this, "账号与安全", Toast.LENGTH_SHORT).show();
+                AlertDialog.Builder builder = new AlertDialog.Builder(SettingActivity.this);
+                builder.setTitle("关于")
+                        .setMessage("版本号：1.0.0\n")
+                        .setPositiveButton("确定", null)
+                        .show();
             }
         });
         logoutButton.setOnClickListener(new View.OnClickListener() {

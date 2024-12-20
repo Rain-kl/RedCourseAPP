@@ -18,7 +18,6 @@ import androidx.fragment.app.Fragment;
 import com.example.myapplication.databinding.FragmentMeBinding;
 import com.example.myapplication.db.UserDBHelper;
 import com.example.myapplication.model.User;
-import com.example.myapplication.utils.SharedPreferencesLoadUser;
 
 public class MeFragment extends Fragment {
 
@@ -59,9 +58,6 @@ public class MeFragment extends Fragment {
                 tvUsername.setText(user.getUsername());
                 TextView tvUserID = binding.tvUserId;
                 tvUserID.setText("UID: " + user.getId());
-
-                SharedPreferencesLoadUser sharedPreferencesLoadUser = new SharedPreferencesLoadUser(sharedPreferences);
-                sharedPreferencesLoadUser.setUser(user);
 
             } else {
                 Toast.makeText(getContext(), "查询失败", Toast.LENGTH_SHORT).show();
