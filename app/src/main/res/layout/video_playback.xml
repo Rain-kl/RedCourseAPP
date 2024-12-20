@@ -9,21 +9,20 @@
     <!-- 视频播放区域 -->
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="260dp"
-        android:background="@color/white">
+        android:layout_height="wrap_content"
+        android:background="@color/black">
 
         <com.google.android.exoplayer2.ui.StyledPlayerView
             android:id="@+id/video_view"
             android:layout_width="match_parent"
-            android:layout_height="250dp"
+            android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:layout_marginTop="3dp"
             android:scaleType="fitCenter" />
-
     </RelativeLayout>
 
     <!-- 标题和描述区域 -->
     <LinearLayout
+        android:id="@+id/details_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white"
@@ -35,6 +34,7 @@
             android:layout_height="match_parent"
             android:layout_weight="4"
             android:orientation="horizontal">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -49,6 +49,7 @@
                     android:textColor="@color/black"
                     android:textSize="20sp"
                     android:textStyle="bold" />
+
                 <TextView
                     android:id="@+id/tv_video_title"
                     android:layout_width="match_parent"
@@ -62,6 +63,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="8">
+
                 <!-- 星星图标 -->
                 <ImageView
                     android:id="@+id/iv_video_star"
@@ -73,7 +75,6 @@
                     android:layout_gravity="center"
                     android:src="@drawable/baseline_star_outline_24" />
             </LinearLayout>
-
         </LinearLayout>
 
         <LinearLayout
@@ -90,6 +91,7 @@
                 android:text="简介"
                 android:textColor="@color/black"
                 android:textSize="16dp" />
+
             <TextView
                 android:id="@+id/tv_video_desc"
                 android:layout_width="match_parent"

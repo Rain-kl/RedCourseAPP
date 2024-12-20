@@ -8,7 +8,10 @@ import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -48,7 +51,10 @@ public class VideoPlaybackActivity extends AppCompatActivity {
     private String desc;
     private String title;
     private int id;
+    private String strId;
+    private LinearLayout detailsLayout;
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,24 +73,33 @@ public class VideoPlaybackActivity extends AppCompatActivity {
         }
 
         playerView = findViewById(R.id.video_view);
+        detailsLayout = findViewById(R.id.details_layout);
 
         // 获取从 CourseFragment 传递过来的位置和其他信息
         Intent intent = getIntent();
         id = Integer.parseInt(intent.getStringExtra("id"));
+        strId = String.valueOf(id);
         desc = intent.getStringExtra("desc");
         title = intent.getStringExtra("title");
 
-        TextView tv_title = findViewById(R.id.tv_video_title);
-        tv_title.setText(title);
-        TextView tv_desc = findViewById(R.id.tv_video_desc);
-        ImageView iv_video_star = findViewById(R.id.iv_video_star);
+        TextView tvTitle = findViewById(R.id.tv_video_title);
+        TextView tvDesc = findViewById(R.id.tv_video_desc);
+        ImageView ivVideoStar = findViewById(R.id.iv_video_star);
+
+        // 设置视频标题和描述
+        tvTitle.setText(title);
+        tvDesc.setText(desc);
 
         // 从 SharedPreferences 加载收藏状态
         boolean isFavorite = loadFavoriteStatus(id);
-        iv_video_star.setImageResource(isFavorite ? R.drawable.baseline_star_rate_24 : R.drawable.baseline_star_outline_24);
+        ivVideoStar.setImageResource(isFavorite ? R.drawable.baseline_star_rate_24 : R.drawable.baseline_star_outline_24);
 
-        iv_video_star.setOnClickListener(v -> toggleFavorite());
-        tv_desc.setText(desc);
+        // 设置收藏按钮点击监听器
+        ivVideoStar.setOnClickListener(v -> toggleFavorite());
+
+        // 根据当前屏幕方向调整 UI
+        adjustUIForOrientation(getResources().getConfiguration().orientation);
+        hideStatusBarOnLandscape(getResources().getConfiguration().orientation);
     }
 
     @Override
@@ -108,35 +123,46 @@ public class VideoPlaybackActivity extends AppCompatActivity {
     @Override
     public void onConfigurationChanged(@NonNull Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        boolean isLandscape = false;
-        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            isLandscape = true;
-            // 确保在横屏时，控制面板和其他控件也能正确显示和隐藏
-            // 这里可以根据需要调整UI逻辑
-        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
-            isLandscape = false;
-            // 同上，确保在竖屏时，UI能正确调整
+        adjustUIForOrientation(newConfig.orientation);
+        hideStatusBarOnLandscape(newConfig.orientation);
+    }
+
+    /**
+     * 根据屏幕方向调整 UI
+     */
+    private void adjustUIForOrientation(int orientation) {
+        if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            detailsLayout.setVisibility(View.GONE);
+        } else {
+            detailsLayout.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void hideStatusBarOnLandscape(int orientation) {
+        if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        } else {
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         }
     }
 
     private void toggleFavorite() {
-        @SuppressLint("DefaultLocale") String uriImgTest = String.format("http://159.75.231.207:9000/red/video/v_%d.png", id);
-        @SuppressLint("DefaultLocale") String strId = String.format("%d", id);
         FavoriteDBHelper favoriteDBHelper = new FavoriteDBHelper(this);
+        @SuppressLint("DefaultLocale") String uriImgTest = String.format("http://159.75.231.207:9000/red/video/v_%d.png", id);
 
         WatchHistory watchHistory = new WatchHistory(user.getId(), strId, title, desc, uriImgTest);
 
         // 从 SharedPreferences 读取最新的收藏状态
         boolean isFavorite = loadFavoriteStatus(id);
+        ImageView ivVideoStar = findViewById(R.id.iv_video_star);
 
-        ImageView iv_video_star = findViewById(R.id.iv_video_star);
         if (!isFavorite) {
-            iv_video_star.setImageResource(R.drawable.baseline_star_rate_24); // 已收藏图标
+            ivVideoStar.setImageResource(R.drawable.baseline_star_rate_24); // 已收藏图标
             favoriteDBHelper.addFavorite(watchHistory);
             saveFavoriteStatus(id, true);
             Toast.makeText(this, "已收藏", Toast.LENGTH_SHORT).show();
         } else {
-            iv_video_star.setImageResource(R.drawable.baseline_star_outline_24); // 未收藏图标
+            ivVideoStar.setImageResource(R.drawable.baseline_star_outline_24); // 未收藏图标
             favoriteDBHelper.deleteFavorite(user.getId(), strId);
             saveFavoriteStatus(id, false);
             Toast.makeText(this, "取消收藏", Toast.LENGTH_SHORT).show();
@@ -195,6 +221,9 @@ public class VideoPlaybackActivity extends AppCompatActivity {
         return "favorite_" + position;
     }
 
+    /**
+     * 保存收藏状态
+     */
     private void saveFavoriteStatus(int position, boolean isFavorite) {
         SharedPreferences prefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
@@ -203,6 +232,9 @@ public class VideoPlaybackActivity extends AppCompatActivity {
         editor.apply();
     }
 
+    /**
+     * 加载收藏状态
+     */
     private boolean loadFavoriteStatus(int position) {
         SharedPreferences prefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
         String key = generatePreferenceKey(position);
