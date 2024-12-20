@@ -29,9 +29,6 @@ public class MyDBHelper extends SQLiteOpenHelper {
     public static final String KEY_REGISTER_DATE = "register_date"; // 添加注册时间字段
     public static final String KEY_USER_FOREIGN_ID = "user_id"; // 外键关联到用户表
 
-
-    // ... 其他个人信息字段
-
     // 观看历史表名
     public static final String TABLE_WATCH_HISTORY = "watch_history";
     // 观看历史表列名
@@ -44,6 +41,14 @@ public class MyDBHelper extends SQLiteOpenHelper {
     // 收藏表列名
     public static final String KEY_FAVORITE_ID = "id";
     public static final String KEY_FAVORITE_DATE = "favorite_date";
+
+
+    //积分表名
+    public static final String TABLE_SCORE = "score";
+    //积分表列名
+    public static final String KEY_SCORE_ID = "id";
+    public static final String KEY_SCORE = "score";
+
 
     // 创建用户表的 SQL 语句
     private static final String CREATE_TABLE_USERS = "CREATE TABLE " + TABLE_USERS + "("
@@ -77,6 +82,14 @@ public class MyDBHelper extends SQLiteOpenHelper {
             + "FOREIGN KEY(" + KEY_USER_FOREIGN_ID + ") REFERENCES " + TABLE_USERS + "(" + KEY_USER_ID + ")"
             + ")";
 
+    // 创建积分表的 SQL 语句
+    private static final String CREATE_TABLE_SCORE = "CREATE TABLE " + TABLE_SCORE + "("
+            + KEY_SCORE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+            + KEY_USER_FOREIGN_ID + " INTEGER,"
+            + KEY_SCORE + " INTEGER,"
+            + "FOREIGN KEY(" + KEY_USER_FOREIGN_ID + ") REFERENCES " + TABLE_USERS + "(" + KEY_USER_ID + ")"
+            + ")";
+
     public MyDBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
@@ -87,6 +100,7 @@ public class MyDBHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_USERS);
         db.execSQL(CREATE_TABLE_WATCH_HISTORY);
         db.execSQL(CREATE_TABLE_FAVORITES);
+        db.execSQL(CREATE_TABLE_SCORE);
     }
 
     @Override
@@ -96,6 +110,7 @@ public class MyDBHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_USERS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_WATCH_HISTORY);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_FAVORITES);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_SCORE);
         onCreate(db);
     }
 
