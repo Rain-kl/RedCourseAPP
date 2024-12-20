@@ -2,9 +2,11 @@ package com.example.myapplication.ui.me.Settings;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,6 +16,8 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.myapplication.R;
 import com.example.myapplication.db.UserDBHelper;
+import com.example.myapplication.login.LoginActivity;
+import com.example.myapplication.ui.me.SettingActivity;
 import com.example.myapplication.utils.LoginUtils;
 import com.example.myapplication.utils.SharedPreferencesLoadUser;
 import com.google.android.material.button.MaterialButton;
@@ -51,9 +55,13 @@ public class DeleteAccountActivity extends AppCompatActivity {
                 .setPositiveButton("确认", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        LoginUtils loginUtils = new LoginUtils(userDBHelper, sp);
-                        loginUtils.logout(sharedPreferencesLoadUser.getUser());
                         userDBHelper.deleteUser(sharedPreferencesLoadUser.getUser().getId());
+                        sharedPreferencesLoadUser.clearUser();
+                        Toast.makeText(DeleteAccountActivity.this, "注销成功", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(DeleteAccountActivity.this, LoginActivity.class);
+                        // 清除任务栈并创建新任务
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent);
                         // 添加注销逻辑，这里可以清除用户数据或者返回登录界面
                     }
                 })
