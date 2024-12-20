@@ -40,13 +40,8 @@ public class MeFragment extends Fragment {
         sharedPreferences = context.getSharedPreferences("data", Context.MODE_PRIVATE);
         userId = sharedPreferences.getInt("user_id", -1);
         userDBHelper = new UserDBHelper(context);
-        loadUserInfo();
     }
 
-    public void loadUserInfo() {
-        // 此时可以安全地使用 sharedPreferences
-        Toast.makeText(getContext(), "User ID: " + userId, Toast.LENGTH_SHORT).show();
-    }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {

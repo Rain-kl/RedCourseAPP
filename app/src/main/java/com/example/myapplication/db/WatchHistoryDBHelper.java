@@ -16,7 +16,7 @@ public class WatchHistoryDBHelper extends MyDBHelper{
         super(context);
     }
     // 添加观看历史
-    public long addWatchHistory(WatchHistory watchHistory) {
+    public void addWatchHistory(WatchHistory watchHistory) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -28,9 +28,8 @@ public class WatchHistoryDBHelper extends MyDBHelper{
 
         // ... 添加其他观看历史字段
 
-        long id = db.insert(TABLE_WATCH_HISTORY, null, values);
+        db.insert(TABLE_WATCH_HISTORY, null, values);
         db.close();
-        return id;
     }
 
     // 获取用户的观看历史
