@@ -97,6 +97,7 @@ public class RegisterActivity extends AppCompatActivity {
             if (!registerStatus) {
                 Toast.makeText(RegisterActivity.this, "注册失败", Toast.LENGTH_SHORT).show();
             } else {
+                Toast.makeText(RegisterActivity.this, "注册成功", Toast.LENGTH_SHORT).show();
                 Intent data = new Intent();
                 data.putExtra("userName", userName);
                 setResult(RESULT_OK, data);
