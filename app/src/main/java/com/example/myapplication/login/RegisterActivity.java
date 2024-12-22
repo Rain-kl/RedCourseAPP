@@ -16,7 +16,7 @@ import android.content.Intent;
 import com.example.myapplication.R;
 import com.example.myapplication.db.UserDBHelper;
 import com.example.myapplication.model.User;
-import com.example.myapplication.utils.MD5Util;
+import com.example.myapplication.utils.MD5Utils;
 
 
 public class RegisterActivity extends AppCompatActivity {
@@ -91,7 +91,7 @@ public class RegisterActivity extends AppCompatActivity {
 
             User newUser = new User();
             newUser.setUsername(userName);
-            newUser.setPassword(MD5Util.md5(psw));
+            newUser.setPassword(MD5Utils.md5(psw));
             newUser.setPhone(phone);
             boolean registerStatus = userDBHelper.addUser(newUser);
             if (!registerStatus) {
