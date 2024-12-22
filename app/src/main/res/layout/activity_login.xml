@@ -21,7 +21,7 @@
         android:layout_marginRight="35dp"
         android:background="@drawable/register_icon_normal"
         android:drawableLeft="@drawable/user_name_icon"
-        android:hint="请输入用户名"/>
+        android:hint="请输入手机号"/>
 
     <EditText android:id="@+id/et_psw"
         android:layout_width="fill_parent"

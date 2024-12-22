@@ -30,6 +30,7 @@ import com.example.myapplication.model.WatchHistory;
 import com.example.myapplication.utils.SharedPreferencesLoadUser;
 import com.google.android.exoplayer2.ExoPlayer;
 import com.google.android.exoplayer2.MediaItem;
+import com.google.android.exoplayer2.Player;
 import com.google.android.exoplayer2.source.ProgressiveMediaSource;
 import com.google.android.exoplayer2.ui.StyledPlayerView;
 import com.google.android.exoplayer2.upstream.DataSource;
@@ -39,6 +40,7 @@ import com.google.android.exoplayer2.upstream.cache.SimpleCache;
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSource;
 
 import java.io.File;
+import java.util.Objects;
 
 public class VideoPlaybackActivity extends AppCompatActivity {
 
@@ -82,7 +84,7 @@ public class VideoPlaybackActivity extends AppCompatActivity {
         new Handler().postDelayed(() -> {
             // 延迟结束，移除遮罩层
             ((RelativeLayout) findViewById(R.id.root_layout)).removeView(overlay);
-        }, 500); // 500 毫秒即 0.5 秒
+        }, 650); // 500 毫秒即 0.5 秒
     }
 
 
@@ -101,12 +103,13 @@ public class VideoPlaybackActivity extends AppCompatActivity {
             }
         }
 
-        playerView = findViewById(R.id.video_view);
         detailsLayout = findViewById(R.id.details_layout);
+        detailsLayout.setVisibility(View.VISIBLE);
+        playerView = findViewById(R.id.video_view);
 
         // 获取从 CourseFragment 传递过来的位置和其他信息
         Intent intent = getIntent();
-        id = Integer.parseInt(intent.getStringExtra("id"));
+        id = Integer.parseInt(Objects.requireNonNull(intent.getStringExtra("id")));
         strId = String.valueOf(id);
         desc = intent.getStringExtra("desc");
         title = intent.getStringExtra("title");
@@ -126,9 +129,9 @@ public class VideoPlaybackActivity extends AppCompatActivity {
         // 设置收藏按钮点击监听器
         ivVideoStar.setOnClickListener(v -> toggleFavorite());
 
-        // 根据当前屏幕方向调整 UI
-        adjustUIForOrientation(getResources().getConfiguration().orientation);
-        hideStatusBarOnLandscape(getResources().getConfiguration().orientation);
+//        // 根据当前屏幕方向调整 UI
+//        adjustUIForOrientation(getResources().getConfiguration().orientation);
+//        hideStatusBarOnLandscape(getResources().getConfiguration().orientation);
 
         // 初始化播放器
         initializePlayer();
@@ -210,7 +213,7 @@ public class VideoPlaybackActivity extends AppCompatActivity {
                 playerView.setPlayer(player);
                 uriTest = String.format("http://159.75.231.207:9000/red/video/v_%d.mp4", id);
 
-                String videoUrl = String.format(uriTest);
+                String videoUrl = uriTest;
                 Uri videoUri = Uri.parse(videoUrl);
 
                 DataSource.Factory upstreamFactory = new DefaultHttpDataSource.Factory();
@@ -223,6 +226,17 @@ public class VideoPlaybackActivity extends AppCompatActivity {
                         .createMediaSource(MediaItem.fromUri(videoUri));
 
                 player.setMediaSource(mediaSource);
+                // 监听准备状态
+                player.addListener(new Player.Listener() {
+                    @Override
+                    public void onPlaybackStateChanged(int playbackState) {
+                        // 当播放器准备好后，让视频控件显示
+                        if (playbackState == Player.STATE_READY) {
+                            playerView.setVisibility(View.VISIBLE);
+                        }
+                    }
+                });
+
                 player.prepare();
                 player.setPlayWhenReady(true);
             }
