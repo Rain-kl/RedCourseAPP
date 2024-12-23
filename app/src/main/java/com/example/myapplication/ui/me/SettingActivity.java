@@ -25,7 +25,7 @@ import com.example.myapplication.login.LoginActivity;
 import com.example.myapplication.model.User;
 import com.example.myapplication.ui.me.Settings.ChangeUserInfoActivity;
 import com.example.myapplication.ui.me.Settings.DeleteAccountActivity;
-import com.example.myapplication.utils.MD5Util;
+import com.example.myapplication.utils.MD5Utils;
 import com.example.myapplication.utils.SharedPreferencesLoadUser;
 
 public class SettingActivity extends AppCompatActivity {
@@ -164,10 +164,10 @@ public class SettingActivity extends AppCompatActivity {
                         Toast.makeText(this, "密码不能为空", Toast.LENGTH_SHORT).show();
                     } else if (!newPassword.equals(confirmPassword)) {
                         Toast.makeText(this, "两次输入的密码不一致", Toast.LENGTH_SHORT).show();
-                    } else if (!MD5Util.md5(oldPassword).equals(user.getPassword())) {
+                    } else if (!MD5Utils.md5(oldPassword).equals(user.getPassword())) {
                         Toast.makeText(this, "原密码错误", Toast.LENGTH_SHORT).show();
                     } else {
-                        user.setPassword(newPassword);
+                        user.setPassword(MD5Utils.md5(newPassword));
                         userDBHelper.updateUser(user);
                         Toast.makeText(this, "修改成功", Toast.LENGTH_SHORT).show();
                     }

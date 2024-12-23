@@ -23,7 +23,7 @@ public class LoginUtils {
         if (user == null) {
             Log.d("LoginUtils", "User not found");
             return LOGIN_FAIL;
-        } else if (!user.getPassword().equals(MD5Util.md5(password))) {
+        } else if (!user.getPassword().equals(MD5Utils.md5(password))) {
             Log.d("LoginUtils", "Password incorrect");
             return LOGIN_FAIL;
         } else {

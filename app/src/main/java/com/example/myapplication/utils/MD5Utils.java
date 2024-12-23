@@ -2,15 +2,15 @@ package com.example.myapplication.utils;
 
 import java.security.MessageDigest;
 
-public class MD5Util {
+public class MD5Utils {
     String input;
 
-    public MD5Util(String input) {
+    public MD5Utils(String input) {
         this.input = input;
     }
 
     public String md5() {
-        return MD5Util.md5(input);
+        return MD5Utils.md5(input);
     }
 
     public static String md5(String input) {
