@@ -63,6 +63,4 @@ public class WatchHistoryDBHelper extends MyDBHelper{
         return historyList;
     }
 
-
-
 }

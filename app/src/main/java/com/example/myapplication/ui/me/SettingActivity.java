@@ -167,7 +167,7 @@ public class SettingActivity extends AppCompatActivity {
                     } else if (!MD5Utils.md5(oldPassword).equals(user.getPassword())) {
                         Toast.makeText(this, "原密码错误", Toast.LENGTH_SHORT).show();
                     } else {
-                        user.setPassword(newPassword);
+                        user.setPassword(MD5Utils.md5(newPassword));
                         userDBHelper.updateUser(user);
                         Toast.makeText(this, "修改成功", Toast.LENGTH_SHORT).show();
                     }

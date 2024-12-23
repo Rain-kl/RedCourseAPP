@@ -6,9 +6,7 @@ public class User {
     private String password;
     private String phone;
     private String registerDate;
-    // ... 其他个人信息字段
 
-    // 构造函数
     public User() {
     }
 
